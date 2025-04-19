@@ -16,25 +16,28 @@
 #include <parlay/hash_table.h>
 
 parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
-  parlay::sequence<std::pair<int,int>> edges;
-  std::ifstream infile(filename);
-  if (!infile) {
-    std::cerr << "Error opening file: " << filename << "\n";
-    return edges;
-  }
+	parlay::sequence<std::pair<int,int>> edges;
+	std::ifstream infile(filename);
+	if (!infile) {
+		std::cerr << "Error opening file: " << filename << "\n";
+		return edges;
+	}
 
-  std::string line;
-  while (std::getline(infile, line)) {
-    if (line.empty()) continue;
-    std::istringstream iss(line);
-    int u, v;
-    if (iss >> u >> v) {
-      edges.push_back({u, v});
-    } else {
-      std::cerr << "Warning: skipping invalid line: " << line << "\n";
-    }
-  }
-  return edges;
+ 	std::string line;
+  	while (std::getline(infile, line)) {
+		if (line.empty()) {
+			continue;
+		}
+
+		std::istringstream iss(line);
+		int u, v;
+		if (iss >> u >> v) {
+			edges.push_back({u, v});
+		} else {
+			std::cerr << "Warning: skipping invalid line: " << line << "\n";
+		}
+	}
+	return edges;
 }
 
 // class
@@ -42,150 +45,134 @@ parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
 // sequence of sequences 
 
 class Graph {
-private:
-  std::unordered_map<int,int> mapping;
 
-  void createNodeCellMapping(const parlay::sequence<std::pair<int,int>>& edges) {
-    if (edges.empty()) return;
-
-    int cnt = 0;
-    int prev = edges[0].first;
-
-    mapping[prev] = cnt;
-    for (const auto &e : edges) {
-      int curr = e.first;
-      if (curr != prev) {
-          cnt++;
-          prev = curr;
-          mapping[curr] = cnt;
-      }
-    }
-  }
-
-  void createAdjList(const parlay::sequence<std::pair<int,int>>& edges) {
-    if (edges.empty()) return;
-
-    adjList.emplace_back();
-    int cnt = 0;
-    int curr = edges[0].first;
-
-    for (const auto& e : edges) {
-      if (e.first != curr) {
-          cnt++;
-          curr = e.first;
-          adjList.emplace_back();
-      }
-      adjList[cnt].push_back(e.second);
-    }
-  }
 public:
-  parlay::sequence<parlay::sequence<int>> adjList;
-  Graph(parlay::sequence<std::pair<int,int>> &edges) {
-    createNodeCellMapping(edges);
-    createAdjList(edges);
-  }
-  void printMapping() {
-    for (auto &ele : mapping) {
-      if (ele.second  < 5) {std::cout << "Key: " << ele.first << " Index: " << ele.second << "\n";}
-    }
-  }
-  void printAdjList() {
-    for (int i = 0; i < 5; i++) {
-      std::cout << "Index: " << i << " Adjacent Nodes: ";
+	parlay::sequence<parlay::sequence<int>> adjList;
 
-      for (auto &e : adjList[i]) {
-        std::cout << e << ", ";
-      }
+	Graph(parlay::sequence<std::pair<int,int>> &edges) {
+		createNodeCellMapping(edges);
+		createAdjList(edges);
+	}
 
-      std::cout << std::endl;
-    }
-  }
+	int map(int vertex) const {
+		return mapping.at(vertex);
+	}
+	
+	void printMapping() {
+		for (auto &ele : mapping) {
+			if (ele.second  < 5) {std::cout << "Key: " << ele.first << " Index: " << ele.second << "\n";}
+		}
+	}
+
+	void printAdjList() const {
+		for (int i = 0; i < adjList.size(); i++) {
+			std::cout << "Index: " << i << " Adjacent Nodes: ";
+
+			for (auto &e : adjList[i]) {
+				std::cout << e << ", ";
+			}
+			std::cout << std::endl;
+		}
+  	}
+
+private:
+	std::unordered_map<int,int> mapping;
+
+	void createNodeCellMapping(const parlay::sequence<std::pair<int,int>>& edges) {
+		if (edges.empty()) return;
+
+		int cnt = 0;
+		int prev = edges[0].first;
+
+		mapping[prev] = cnt;
+
+		for (const auto &e : edges) {
+			int curr = e.first;
+			if (curr != prev) {
+				cnt++;
+				prev = curr;
+				mapping[curr] = cnt;
+			}
+		}
+	}	
+
+	void createAdjList(const parlay::sequence<std::pair<int,int>>& edges) {
+		if (edges.empty()) return;
+
+		adjList.emplace_back();
+		int cnt = 0;
+		int curr = edges[0].first;
+
+		for (const auto& e : edges) {
+			if (e.first != curr) {
+				cnt++;
+				curr = e.first;
+				adjList.emplace_back();
+			}
+			adjList[cnt].push_back(e.second);
+    	}
+	}
 };
 
-// class Solver {
-// private:
-//   int triangle_count = 0;
-//   Graph *graph;
-//   std::unordered_set<std::pair<int,int>> edges;
-
-//   int queryEdges(std::pair<int,int> e1, std::pair<int,int> e2) {
-//     return edges.find({e1.second, e2.second}) != edges.end();
-//   }
-// public:
-//   Solver(const Graph* g, const parlay::sequence<std::pair<int,int>> &edges) : graph(g), edges(edges.begin(), edges.end()) {}
-//   int getTriangleCount() { return triangle_count; }
-
-//   void computeTriangles() {
-//     for (auto &e : edges) {
-//       int w, u;
-//       if (graph->adjList[e.first].size() <= graph->adjList[e.second].size()) { 
-//         w, u = e.first, e.second;
-//       } else {
-//         w, u = e.second, e.first;
-//       }
-
-//       for (auto &v : graph->adjList[w]) {
-//         triangle_count += queryEdges({w,u}, {w, v});
-//       }
-//     }
-//   }
-// };
-
 struct PairHash {
-    std::size_t operator()(const std::pair<int,int>& p) const noexcept {
-        return std::hash<int>{}(p.first) ^ (std::hash<int>{}(p.second) << 1);
-    }
+	std::size_t operator()(const std::pair<int,int>& p) const {
+		// return ~(std::hash<int>{}(p.first)) ^ (std::hash<int>{}(p.second));
+		return (std::hash<int>{}(p.first)) ^ (std::hash<int>{}(p.second)) << 1;
+	}
 };
 
 class Solver {
-private:
-  int triangle_count = 0;
-  Graph* graph;
-
-  std::unordered_set<std::pair<int,int>, PairHash> edges;
-
-  int queryEdges(std::pair<int,int> e1, std::pair<int,int> e2) {
-    return edges.find({e1.second, e2.second}) != edges.end();
-  }
 
 public:
-  Solver(const Graph* g,
-         const parlay::sequence<std::pair<int,int>>& es)
-    : graph(const_cast<Graph*>(g)), edges(es.begin(), es.end()) {}
+	Solver(const Graph *g, const parlay::sequence<std::pair<int,int>> &edges) : graph(g), edges(edges.begin(), edges.end()) {}
+	int getTriangleCount() { return triangle_count; }
 
-  int getTriangleCount() { return triangle_count; }
+	void computeTriangles() {
+		for (auto &e : edges) {
+			int w, u;
+			if (graph->adjList[graph->map(e.first)].size() <= graph->adjList[graph->map(e.second)].size()) { 
+				w = e.first;
+				u = e.second;
+			} else { 
+				w = e.second;
+				u = e.first;
+      		}
+			
+			for (auto &v : graph->adjList[graph->map(w)]) {				
+				triangle_count += queryEdges({w,u}, {w, v});
+    		}
+    	}
+	}
+	
+private:
+	/**
+	 * Private variables:
+	 * triangle_count is a running total of triangles
+	 * graph is a pointer to the 
+	 */
+	int triangle_count = 0;
+	const Graph *graph;
+	std::unordered_set<std::pair<int,int>, PairHash> edges;
 
-  void computeTriangles() {
-    for (const auto& e : edges) {
-      int w, u;
-      if (graph->adjList[e.first].size() <= graph->adjList[e.second].size()) {
-        w = e.first;  u = e.second;
-      } else {
-        w = e.second; u = e.first;
-      }
-      for (auto v : graph->adjList[w]) {
-        triangle_count += queryEdges({w,u}, {w,v});
-      }
-    }
-  }
+	int queryEdges(std::pair<int,int> e1, std::pair<int,int> e2) {
+		return edges.find({e1.second, e2.second}) != edges.end();
+	}
 };
 
 int main(int argc, char** argv) {
+	std::string data_file  = argv[1];
+	parlay::sequence<std::pair<int,int>> edges = parseEdges(data_file);
+	Graph *g = new Graph(edges);
 
-  std::string data_file  = argv[1];
-  parlay::sequence<std::pair<int,int>> edges = parseEdges(data_file);
-  Graph *g = new Graph(edges);
+	// g->printMapping();
+	// g->printAdjList();
 
-  // g->printMapping();
-  // g->printAdjList();
+	Solver* s = new Solver(g, edges);
+	s->computeTriangles();
+	int tot = s->getTriangleCount();
+	int triangles = tot / 6;
 
-  Solver* s = new Solver(g, edges);
-  s->computeTriangles();
-  int tot = s->getTriangleCount();
-  int triangles = tot / 6;
+	std::cout << "Total: " << tot << " Triangles: " << triangles << std::endl;
 
-  std::cout << "Total: " << tot << " Triangles: " << triangles << std::endl;
-
-  return 0;
+	return 0;
 }
-
