@@ -7,6 +7,7 @@
 #include <limits>
 #include <unordered_map>
 #include <unordered_set>
+#include <omp.h>
 #include <utility>
 
 // Include ParlayLib (adjust the path if needed)
@@ -32,7 +33,9 @@ parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
 		std::istringstream iss(line);
 		int u, v;
 		if (iss >> u >> v) {
-			edges.push_back({u, v});
+			if (u != v) {
+				edges.push_back({u, v});
+			}
 		} else {
 			std::cerr << "Warning: skipping invalid line: " << line << "\n";
 		}
@@ -60,7 +63,8 @@ public:
 	
 	void printMapping() {
 		for (auto &ele : mapping) {
-			if (ele.second  < 5) {std::cout << "Key: " << ele.first << " Index: " << ele.second << "\n";}
+			// if (ele.second  < 5) {std::cout << "Key: " << ele.first << " Index: " << ele.second << "\n";}
+			std::cout << "Key: " << ele.first << " Index: " << ele.second << "\n";
 		}
 	}
 
@@ -128,7 +132,14 @@ public:
 	int getTriangleCount() { return triangle_count; }
 
 	void computeTriangles() {
-		for (auto &e : edges) {
+		parlay::parallel_for(0, Q, [&](int i){
+			KNNHelper helper(data_points, k);
+			helper.search(root, query_points[i]);
+			results[i] = helper.get_results();
+		});
+
+		parlay::parallel_for(0, edges.size(), [&](int i){for (auto &e : edges) {
+			auto e = edges[i];
 			int w, u;
 			if (graph->adjList[graph->map(e.first)].size() <= graph->adjList[graph->map(e.second)].size()) { 
 				w = e.first;
@@ -138,8 +149,9 @@ public:
 				u = e.first;
       		}
 			
+
 			for (auto &v : graph->adjList[graph->map(w)]) {				
-				triangle_count += queryEdges({w,u}, {w, v});
+				triangle_count += queryEdges({w, u}, {w, v});
     		}
     	}
 	}
@@ -162,17 +174,27 @@ private:
 int main(int argc, char** argv) {
 	std::string data_file  = argv[1];
 	parlay::sequence<std::pair<int,int>> edges = parseEdges(data_file);
+	// for (auto &edge : edges) {
+	// 	if (edge.first == edge.second) {
+	// 		std::cout << "YO";
+	// 	}
+	// }
+	// std::cout << "PAUSE";
+
 	Graph *g = new Graph(edges);
 
 	// g->printMapping();
 	// g->printAdjList();
-
+	double start_time = omp_get_wtime();
 	Solver* s = new Solver(g, edges);
 	s->computeTriangles();
 	int tot = s->getTriangleCount();
 	int triangles = tot / 6;
-
+	
 	std::cout << "Total: " << tot << " Triangles: " << triangles << std::endl;
 
+	double end_time = omp_get_wtime();
+    double elapsed = end_time - start_time;
+	std::cout << "Time Elapsed: " << elapsed << std::endl;
 	return 0;
 }
