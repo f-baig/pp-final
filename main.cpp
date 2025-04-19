@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <omp.h>
 #include <utility>
+#include <atomic>
 
 // Include ParlayLib (adjust the path if needed)
 #include <parlay/primitives.h>
@@ -138,7 +139,9 @@ struct PairHash {
 class Solver {
 
 public:
-	Solver(const Graph *g, const parlay::sequence<std::pair<int,int>> &edges) : graph(g), edges(edges.begin(), edges.end()) {}
+	Solver(const Graph *g, const parlay::sequence<std::pair<int,int>> &edges) : 
+		graph(g), edges_seq(edges), edges_set(edges.begin(), edges.end()) {}
+
 	int getTriangleCount() { return triangle_count; }
 
 	void computeTriangles() {
@@ -148,9 +151,10 @@ public:
 		// 	results[i] = helper.get_results();
 		// });
 
-		for (auto &e : edges) {
-			// auto e = edges[i];
+		parlay::parallel_for(0, edges_seq.size(), [&](int i) {
+			auto e = edges_seq[i];
 			int w, u;
+
 			if (graph->adjList[graph->map(e.first)].size() <= graph->adjList[graph->map(e.second)].size()) { 
 				w = e.first;
 				u = e.second;
@@ -160,10 +164,11 @@ public:
       		}
 			
 
-			for (auto &v : graph->adjList[graph->map(w)]) {				
-				triangle_count += queryEdges({w, u}, {w, v});
+			for (auto &v : graph->adjList[graph->map(w)]) {		
+				triangle_count.fetch_add(queryEdges({w, u}, {w, v}), std::memory_order_relaxed);		
+				// triangle_count +=;
     		}
-    	}
+		});
 	}
 	
 private:
@@ -172,16 +177,17 @@ private:
 	 * triangle_count is a running total of triangles
 	 * graph is a pointer to the 
 	 */
-	int triangle_count = 0;
+	std::atomic<int> triangle_count{0};
 	const Graph *graph;
-	std::unordered_set<std::pair<int,int>, PairHash> edges;
+	parlay::sequence<std::pair<int,int>> edges_seq;
+	std::unordered_set<std::pair<int,int>, PairHash> edges_set;
 
 	int queryEdges(std::pair<int,int> e1, std::pair<int,int> e2) {
 		if (e1.second < e2.second) {
-			return edges.find({e1.second, e2.second}) != edges.end();
+			return edges_set.find({e1.second, e2.second}) != edges_set.end();
 		}
 		else { // e2.second < e1.second
-			return edges.find({e2.second, e1.second}) != edges.end();
+			return edges_set.find({e2.second, e1.second}) != edges_set.end();
 		}	
 	}
 };
