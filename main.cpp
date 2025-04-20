@@ -43,7 +43,7 @@ parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
 		edges_seq.push_back({v, u});
 		edges_set.insert({u, v});
 	}
-
+	
 	return edges_seq;
 }
 
@@ -98,19 +98,9 @@ public:
 	Solver(const Graph *g, const parlay::sequence<std::pair<int,int>> &edges) : 
 		graph(g), edges_seq(edges) {
 			edges_set.reserve(edges_seq.size());
-			// for (const auto& e : edges_seq) {
-			// 	edges_set.insert(e);
-			// }	
-			size_t P = parlay::num_workers();
-			parlay::sequence<std::unordered_set<std::pair<int, int>, PairHash>> split(P);
-
-			parlay::parallel_for(0, edges_seq.size(), [&](size_t i) {
-				split[parlay::worker_id()].insert(edges_seq[i]);
-			});
-
-			for (const auto& s : split) {
-				edges_set.insert(s.begin(), s.end());
-			}
+			for (const auto& e : edges_seq) {
+				edges_set.insert(e);
+			}	
 		}
 
 	int getTriangleCount() { return triangle_count; }
@@ -120,7 +110,6 @@ public:
 
 		parlay::parallel_for(0, edges_seq.size(), [&](int i) {
 			long long triangle_count_iter = 0;
-			// parlay::sequence<std::pair<int, int>> queries;
 
 			auto e = edges_seq[i];
 			int w, u;
@@ -133,24 +122,11 @@ public:
 				u = e.first;
       		}
 			
-
 			for (auto &v : graph->adjList.at(w)) {		
-				// if (u < v) {
-				// 	queries.push_back({u, v});
-				// } else {
-				// 	queries.push_back({v, u});
-				// }
-				triangle_count_iter += queryEdges({w, u}, {w, v});
-				// triangle_count.fetch_add(queryEdges({w, u}, {w, v}), std::memory_order_relaxed);		
+				triangle_count_iter += queryEdges({w, u}, {w, v});		
     		}
-			
-			// auto success = parlay::filter(queries, [&](auto e) {
-			// 	return edges_set.find(e) != edges_set.end();
-			// });
-
+		
 			counts[i] = triangle_count_iter;
-			// counts[i] = success.size();
-			//triangle_count.fetch_add(triangle_count_iter, std::memory_order_relaxed);
 		});
 
 		triangle_count = parlay::reduce(counts, parlay::addm<long long>());
