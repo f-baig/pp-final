@@ -56,75 +56,35 @@ parlay::sequence<std::pair<int,int>> halfEdges(const parlay::sequence<std::pair<
 
 // class
 // stores mapping
-// sequence of sequences 
-
+// map from vertexID to sequences 
 class Graph {
 
 public:
-	parlay::sequence<parlay::sequence<int>> adjList;
+	std::unordered_map<int,parlay::sequence<int>> adjList;
 
 	Graph(parlay::sequence<std::pair<int,int>> &edges) {
-		createNodeCellMapping(edges);
 		createAdjList(edges);
 	}
 
-	int map(int vertex) const {
-		return mapping.at(vertex);
-	}
-	
-	void printMapping() {
-		for (auto &ele : mapping) {
-			// if (ele.second  < 5) {std::cout << "Key: " << ele.first << " Index: " << ele.second << "\n";}
-			std::cout << "Key: " << ele.first << " Index: " << ele.second << "\n";
-		}
-	}
+	// void printAdjList() const {
+	// 	for (int i = 0; i < adjList.size(); i++) {
+	// 		std::cout << "Index: " << i << " Adjacent Nodes: ";
 
-	void printAdjList() const {
-		for (int i = 0; i < adjList.size(); i++) {
-			std::cout << "Index: " << i << " Adjacent Nodes: ";
-
-			for (auto &e : adjList[i]) {
-				std::cout << e << ", ";
-			}
-			std::cout << std::endl;
-		}
-  	}
+	// 		for (auto &e : adjList[i]) {
+	// 			std::cout << e << ", ";
+	// 		}
+	// 		std::cout << std::endl;
+	// 	}
+  	// }
 
 private:
-	std::unordered_map<int,int> mapping;
-
-	void createNodeCellMapping(const parlay::sequence<std::pair<int,int>>& edges) {
-		if (edges.empty()) return;
-
-		int cnt = 0;
-		int prev = edges[0].first;
-
-		mapping[prev] = cnt;
-
-		for (const auto &e : edges) {
-			int curr = e.first;
-			if (curr != prev) {
-				cnt++;
-				prev = curr;
-				mapping[curr] = cnt;
-			}
-		}
-	}	
-
 	void createAdjList(const parlay::sequence<std::pair<int,int>>& edges) {
 		if (edges.empty()) return;
 
-		adjList.emplace_back();
-		int cnt = 0;
-		int curr = edges[0].first;
-
 		for (const auto& e : edges) {
-			if (e.first != curr) {
-				cnt++;
-				curr = e.first;
-				adjList.emplace_back();
-			}
-			adjList[cnt].push_back(e.second);
+			int u = e.first;
+			int v = e.second;
+			adjList[u].push_back(v);
     	}
 	}
 };
@@ -145,17 +105,11 @@ public:
 	int getTriangleCount() { return triangle_count; }
 
 	void computeTriangles() {
-		// parlay::parallel_for(0, Q, [&](int i){
-		// 	KNNHelper helper(data_points, k);
-		// 	helper.search(root, query_points[i]);
-		// 	results[i] = helper.get_results();
-		// });
-
 		parlay::parallel_for(0, edges_seq.size(), [&](int i) {
 			auto e = edges_seq[i];
 			int w, u;
 
-			if (graph->adjList[graph->map(e.first)].size() <= graph->adjList[graph->map(e.second)].size()) { 
+			if (graph->adjList.at(e.first).size() <= graph->adjList.at(e.second).size()) { 
 				w = e.first;
 				u = e.second;
 			} else { 
@@ -164,9 +118,8 @@ public:
       		}
 			
 
-			for (auto &v : graph->adjList[graph->map(w)]) {		
+			for (auto &v : graph->adjList.at(w)) {		
 				triangle_count.fetch_add(queryEdges({w, u}, {w, v}), std::memory_order_relaxed);		
-				// triangle_count +=;
     		}
 		});
 	}

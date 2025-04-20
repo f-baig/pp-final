@@ -13,6 +13,9 @@ all: final
 $(TARGET): $(SRC)	
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(TARGET) $(SRC)
 
+relabel: relabel.cpp
+	$(CXX) $(CXXFLAGSs) -o relabel relabel.cpp
+
 # Clean rule
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) relabel
