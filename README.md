@@ -49,3 +49,5 @@ email-Enron Datset:
 GBBS - 0.00350133 s
 
 Commit "Fetch Add Per Query": 0.1595534
+
+Commit "Private Triangle count per iteration, fetch_add once per iteration": 0.03855484

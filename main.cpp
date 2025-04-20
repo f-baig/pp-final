@@ -102,6 +102,8 @@ public:
 
 	void computeTriangles() {
 		parlay::parallel_for(0, edges_seq.size(), [&](int i) {
+			long long triangle_count_iter = 0;
+
 			auto e = edges_seq[i];
 			int w, u;
 
@@ -115,8 +117,10 @@ public:
 			
 
 			for (auto &v : graph->adjList.at(w)) {		
-				triangle_count.fetch_add(queryEdges({w, u}, {w, v}), std::memory_order_relaxed);		
+				triangle_count_iter += queryEdges({w, u}, {w, v});
+				// triangle_count.fetch_add(queryEdges({w, u}, {w, v}), std::memory_order_relaxed);		
     		}
+			triangle_count.fetch_add(triangle_count_iter, std::memory_order_relaxed);
 		});
 	}
 	
@@ -126,7 +130,7 @@ private:
 	 * triangle_count is a running total of triangles
 	 * graph is a pointer to the 
 	 */
-	std::atomic<int> triangle_count{0};
+	std::atomic<long long> triangle_count{0};
 	const Graph *graph;
 	parlay::sequence<std::pair<int,int>> edges_seq;
 	std::unordered_set<std::pair<int,int>, PairHash> edges_set;
@@ -155,8 +159,8 @@ int main(int argc, char** argv) {
 	double start_time = omp_get_wtime();
 	Solver* s = new Solver(g, half_edges);
 	s->computeTriangles();
-	int tot = s->getTriangleCount();
-	int triangles = tot / 3;
+	long long tot = s->getTriangleCount();
+	long long triangles = tot / 3;
 	
 	std::cout << "Total: " << tot << " Triangles: " << triangles << std::endl;
 
