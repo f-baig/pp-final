@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/accts/fsg5/cs424/CPSC424/arboricity
+CMAKE_SOURCE_DIR = /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/accts/fsg5/cs424/CPSC424/arboricity/build
+CMAKE_BINARY_DIR = /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -85,14 +85,14 @@ clean: CMakeFiles/find_arboricity.dir/clean
 CMakeFiles/arboricity.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/arboricity.dir/build.make CMakeFiles/arboricity.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/arboricity.dir/build.make CMakeFiles/arboricity.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target arboricity"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target arboricity"
 .PHONY : CMakeFiles/arboricity.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/arboricity.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/arboricity.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles 0
 .PHONY : CMakeFiles/arboricity.dir/rule
 
 # Convenience name for target.
@@ -111,14 +111,14 @@ CMakeFiles/arboricity.dir/clean:
 CMakeFiles/test_arboricity.dir/all: CMakeFiles/arboricity.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arboricity.dir/build.make CMakeFiles/test_arboricity.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_arboricity.dir/build.make CMakeFiles/test_arboricity.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles --progress-num=9,10 "Built target test_arboricity"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles --progress-num=9,10 "Built target test_arboricity"
 .PHONY : CMakeFiles/test_arboricity.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/test_arboricity.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_arboricity.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles 0
 .PHONY : CMakeFiles/test_arboricity.dir/rule
 
 # Convenience name for target.
@@ -137,14 +137,14 @@ CMakeFiles/test_arboricity.dir/clean:
 CMakeFiles/find_arboricity.dir/all: CMakeFiles/arboricity.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/find_arboricity.dir/build.make CMakeFiles/find_arboricity.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/find_arboricity.dir/build.make CMakeFiles/find_arboricity.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles --progress-num=7,8 "Built target find_arboricity"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles --progress-num=7,8 "Built target find_arboricity"
 .PHONY : CMakeFiles/find_arboricity.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/find_arboricity.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/find_arboricity.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles 0
 .PHONY : CMakeFiles/find_arboricity.dir/rule
 
 # Convenience name for target.
