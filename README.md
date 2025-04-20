@@ -57,3 +57,5 @@ GBBS - 0.00350133 s
 4. Commit "add queries to a sequence, then filter out one's in edges_set": 0.04361992 s
 
 5. Builds on Commit 3, Commit "allocate size of edges_set to save time from rehashing": 0.03022596 s
+
+6. Builds on Commit 3, Commit "parallelized edges_set construction in hopes of improving cache hits": 0.0355912 s

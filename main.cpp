@@ -98,9 +98,19 @@ public:
 	Solver(const Graph *g, const parlay::sequence<std::pair<int,int>> &edges) : 
 		graph(g), edges_seq(edges) {
 			edges_set.reserve(edges_seq.size());
-			for (const auto& e : edges_seq) {
-				edges_set.insert(e);
-			}	
+			// for (const auto& e : edges_seq) {
+			// 	edges_set.insert(e);
+			// }	
+			size_t P = parlay::num_workers();
+			parlay::sequence<std::unordered_set<std::pair<int, int>, PairHash>> split(P);
+
+			parlay::parallel_for(0, edges_seq.size(), [&](size_t i) {
+				split[parlay::worker_id()].insert(edges_seq[i]);
+			});
+
+			for (const auto& s : split) {
+				edges_set.insert(s.begin(), s.end());
+			}
 		}
 
 	int getTriangleCount() { return triangle_count; }
