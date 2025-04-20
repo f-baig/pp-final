@@ -5,6 +5,11 @@ Triangle Counts:
 arxiv-gqc.txt: 48260
 email-Enron.txt: 727044
 
+Relabel:
+- Doesn't Double
+- Relabel vertices
+- gets rid of comments
+
 TODO:
 - Make the edges list not have both directions
 - Deal with large vertex IDs (use strings)

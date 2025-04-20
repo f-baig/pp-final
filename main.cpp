@@ -19,28 +19,19 @@
 
 parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
 	parlay::sequence<std::pair<int,int>> edges;
-	std::ifstream infile(filename);
-	if (!infile) {
+	std::ifstream in(filename);
+	if (!in) {
 		std::cerr << "Error opening file: " << filename << "\n";
 		return edges;
 	}
 
- 	std::string line;
-  	while (std::getline(infile, line)) {
-		if (line.empty()) {
-			continue;
-		}
-
-		std::istringstream iss(line);
-		int u, v;
-		if (iss >> u >> v) {
-			if (u != v) {
-				edges.push_back({u, v});
-			}
-		} else {
-			std::cerr << "Warning: skipping invalid line: " << line << "\n";
+	int u, v;
+	while (in >> u >> v) {
+		if (u != v) {
+			edges.push_back({u, v});
 		}
 	}
+
 	return edges;
 }
 
