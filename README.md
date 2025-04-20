@@ -89,4 +89,6 @@ Building these notes on Commit 5: 0.0263645 s
 
 8. Commit "Binary search for every queried edge to eliminate hashing time": 0.006507838 s
 
+9. Commit "Merge-like strategy to count shared vertices": 0.00424631 s
+
 

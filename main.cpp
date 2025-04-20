@@ -131,24 +131,8 @@ public:
 		parlay::sequence<long long> counts(edges.size());
 
 		parlay::parallel_for(0, edges.size(), [&](int i) {
-			long long triangle_count_iter = 0;
-
 			auto e = edges[i];
-			int w, u;
-
-			if (graph->adjList[e.first].size() <= graph->adjList[e.second].size()) { 
-				w = e.first;
-				u = e.second;
-			} else { 
-				w = e.second;
-				u = e.first;
-      		}
-			
-			for (auto &v : graph->adjList[w]) {		
-				triangle_count_iter += queryEdge(u, v);		
-    		}
-		
-			counts[i] = triangle_count_iter;
+			counts[i] = countSharedVertices(graph->adjList[e.first], graph->adjList[e.second]);
 		});
 
 		triangle_count = parlay::reduce(counts, parlay::addm<long long>());
@@ -164,9 +148,23 @@ private:
 	const Graph *graph;
 	parlay::sequence<std::pair<int,int>> edges;
 
-	int queryEdge(int u, int v) {
-		return std::binary_search(graph->adjList[u].begin(), graph->adjList[u].end(), v);
-	};
+	long long countSharedVertices(const parlay::sequence<int>& w, const parlay::sequence<int>& u) {
+		size_t w_idx = 0;
+		size_t u_idx = 0;
+		long long count = 0;
+		while (w_idx < w.size() && u_idx < u.size()) {
+			if (w[w_idx] < u[u_idx]) {
+				w_idx++;
+			} else if (w[w_idx] > u[u_idx]) {
+				u_idx++;
+			} else { // w[w_idx] = u[u_udx]
+				count++; 
+				w_idx++;
+				u_idx++;
+			}
+		}
+		return count;
+	}
 };
 
 int main(int argc, char** argv) {
