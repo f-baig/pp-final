@@ -125,7 +125,7 @@ public:
 	Solver(const Graph *g, const parlay::sequence<std::pair<int,int>> &edges) : 
 		graph(g), edges(edges) {}
 
-	int getTriangleCount() { return triangle_count; }
+	long long getTriangleCount() { return triangle_count; }
 
 	void computeTriangles() {
 		parlay::sequence<long long> counts(edges.size());
