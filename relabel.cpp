@@ -28,16 +28,20 @@ void relabel(const string &input, const string &output) {
         std::istringstream iss(line);
 		string u, v;
 		if (iss >> u >> v) {
-            auto get_id = [&](const string& s) -> int {
-                if (map.count(s)) {
-                    return map[s];
-                }
-                map[s] = idx;
-                idx++;
-                return map[s]; 
-            };
-            out << get_id(u) << " " << get_id(v) << "\n";
-		} else {
+            if (u == "#") {
+                std::cerr << "Warning: skipping # line: " << line << "\n";
+            } else if (u != v) {
+                auto get_id = [&](const string& s) -> int {
+                    if (map.count(s)) {
+                        return map[s];
+                    }
+                    map[s] = idx;
+                    idx++;
+                    return map[s]; 
+                };
+                out << get_id(u) << " " << get_id(v) << "\n";
+            }
+        } else {
 		    std::cerr << "Warning: skipping invalid line: " << line << "\n";
 		}
     }

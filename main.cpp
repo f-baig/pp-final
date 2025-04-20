@@ -17,22 +17,34 @@
 #include <parlay/sequence.h>
 #include <parlay/hash_table.h>
 
+struct PairHash {
+	std::size_t operator()(const std::pair<int,int>& p) const {
+		// return ~(std::hash<int>{}(p.first)) ^ (std::hash<int>{}(p.second));
+		return (std::hash<int>{}(p.first)) ^ (std::hash<int>{}(p.second)) << 1;
+	}
+};
+
 parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
-	parlay::sequence<std::pair<int,int>> edges;
+	parlay::sequence<std::pair<int,int>> edges_seq;
 	std::ifstream in(filename);
 	if (!in) {
 		std::cerr << "Error opening file: " << filename << "\n";
-		return edges;
+		return edges_seq;
 	}
+
+	std::unordered_set<std::pair<int,int>, PairHash> edges_set;
 
 	int u, v;
 	while (in >> u >> v) {
-		if (u != v) {
-			edges.push_back({u, v});
+		if (edges_set.count({u, v}) || edges_set.count({v, u})) {
+			continue;
 		}
+		edges_seq.push_back({u, v});
+		edges_seq.push_back({v, u});
+		edges_set.insert({u, v});
 	}
 
-	return edges;
+	return edges_seq;
 }
 
 parlay::sequence<std::pair<int,int>> halfEdges(const parlay::sequence<std::pair<int,int>> edges) {
@@ -77,13 +89,6 @@ private:
 			int v = e.second;
 			adjList[u].push_back(v);
     	}
-	}
-};
-
-struct PairHash {
-	std::size_t operator()(const std::pair<int,int>& p) const {
-		// return ~(std::hash<int>{}(p.first)) ^ (std::hash<int>{}(p.second));
-		return (std::hash<int>{}(p.first)) ^ (std::hash<int>{}(p.second)) << 1;
 	}
 };
 
