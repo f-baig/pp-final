@@ -17,8 +17,8 @@ TODO:
 - Test executable in makefile
 
 **Running Test Script**
-chmod +x ./test-pipeline.sh
-./test-pipeline https://snap.stanford.edu/data/wiki-Vote.txt.gz
+- chmod +x ./test-pipeline.sh
+- ./test-pipeline https://snap.stanford.edu/data/wiki-Vote.txt.gz
 
 **Commands for Gbbs:**
 
