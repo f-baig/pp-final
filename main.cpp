@@ -83,7 +83,7 @@ parlay::sequence<std::pair<int,int>> halfEdges(const parlay::sequence<std::pair<
 class Graph {
 
 public:
-	std::unordered_map<int,parlay::sequence<int>> adjList;
+	parlay::sequence<parlay::sequence<int>> adjList;
 
 	Graph(parlay::sequence<std::pair<int,int>> &edges) {
 		createAdjList(edges);
@@ -103,6 +103,13 @@ public:
 private:
 	void createAdjList(const parlay::sequence<std::pair<int,int>>& edges) {
 		if (edges.empty()) return;
+
+		int max_vertex = 0;
+		for (const auto& e : edges) {
+			max_vertex = std::max({max_vertex, e.first, e.second});
+		}
+
+		adjList = parlay::sequence<parlay::sequence<int>>(max_vertex + 1);
 
 		for (const auto& e : edges) {
 			int u = e.first;
@@ -134,7 +141,7 @@ public:
 			auto e = edges_seq[i];
 			int w, u;
 
-			if (graph->adjList.at(e.first).size() <= graph->adjList.at(e.second).size()) { 
+			if (graph->adjList[e.first].size() <= graph->adjList[e.second].size()) { 
 				w = e.first;
 				u = e.second;
 			} else { 
@@ -142,7 +149,7 @@ public:
 				u = e.first;
       		}
 			
-			for (auto &v : graph->adjList.at(w)) {		
+			for (auto &v : graph->adjList[w]) {		
 				triangle_count_iter += queryEdges({w, u}, {w, v});		
     		}
 		
