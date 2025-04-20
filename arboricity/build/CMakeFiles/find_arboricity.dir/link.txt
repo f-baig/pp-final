@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/find_arboricity.dir/find_arboricity.cpp.o -o find_arboricity  libarboricity.a 

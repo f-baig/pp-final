@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/test_arboricity.dir/test_arboricity.cpp.o -o test_arboricity  libarboricity.a 

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libarboricity.a CMakeFiles/arboricity.dir/spanning_forest.cpp.o CMakeFiles/arboricity.dir/solve.cpp.o CMakeFiles/arboricity.dir/undirected_graph.cpp.o CMakeFiles/arboricity.dir/maxflow-v3.04.src/graph.cpp.o CMakeFiles/arboricity.dir/maxflow-v3.04.src/maxflow.cpp.o
+/usr/bin/ranlib libarboricity.a

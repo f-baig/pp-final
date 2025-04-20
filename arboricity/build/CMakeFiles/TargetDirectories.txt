@@ -1,0 +1,5 @@
+/home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles/arboricity.dir
+/home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles/test_arboricity.dir
+/home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles/find_arboricity.dir
+/home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles/edit_cache.dir
+/home/accts/fsg5/cs424/CPSC424/arboricity/build/CMakeFiles/rebuild_cache.dir
