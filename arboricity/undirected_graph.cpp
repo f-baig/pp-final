@@ -230,7 +230,7 @@ int UndirectedGraph::Solve()
 	int i, k0, k;
 
 	k0 = Solve0();
-	printf(" k0=%d ", k0);
+	// printf(" k0=%d ", k0);
 
 	Compact();
 
@@ -266,7 +266,7 @@ int UndirectedGraph::Solve()
 		exit(1);
 	}
 
-	printf(" k=%d\n", k);
-
+	// printf(" k=%d\n", k);
+	
 	return k;
 }
