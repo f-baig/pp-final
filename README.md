@@ -48,10 +48,12 @@ email-Enron Datset (times are median of 5 trials):
 
 GBBS - 0.00350133 s
 
-Commit "Fetch Add Per Query": 0.1595534 s
+1. Commit "Fetch Add Per Query": 0.1595534 s
 
-Commit "Private Triangle count per iteration, fetch_add once per iteration": 0.03855484 s
+2. Commit "Private Triangle count per iteration, fetch_add once per iteration": 0.03855484 s
 
-Commit "store triangle counts per iteration in a sequence, then parlay reduce sum": 0.03456398 s
+3. Commit "store triangle counts per iteration in a sequence, then parlay reduce sum": 0.03456398 s
 
-Commit "add queries to a sequence, then filter out one's in edges_set": 0.04361992 s
+4. Commit "add queries to a sequence, then filter out one's in edges_set": 0.04361992 s
+
+5. Builds on Commit 3, Commit "allocate size of edges_set to save time from rehashing": 0.03022596 s

@@ -96,7 +96,12 @@ class Solver {
 
 public:
 	Solver(const Graph *g, const parlay::sequence<std::pair<int,int>> &edges) : 
-		graph(g), edges_seq(edges), edges_set(edges.begin(), edges.end()) {}
+		graph(g), edges_seq(edges) {
+			edges_set.reserve(edges_seq.size());
+			for (const auto& e : edges_seq) {
+				edges_set.insert(e);
+			}	
+		}
 
 	int getTriangleCount() { return triangle_count; }
 
@@ -104,8 +109,8 @@ public:
 		parlay::sequence<long long> counts(edges_seq.size());
 
 		parlay::parallel_for(0, edges_seq.size(), [&](int i) {
-			// long long triangle_count_iter = 0;
-			parlay::sequence<std::pair<int, int>> queries;
+			long long triangle_count_iter = 0;
+			// parlay::sequence<std::pair<int, int>> queries;
 
 			auto e = edges_seq[i];
 			int w, u;
@@ -120,21 +125,21 @@ public:
 			
 
 			for (auto &v : graph->adjList.at(w)) {		
-				if (u < v) {
-					queries.push_back({u, v});
-				} else {
-					queries.push_back({v, u});
-				}
-				// triangle_count_iter += queryEdges({w, u}, {w, v});
+				// if (u < v) {
+				// 	queries.push_back({u, v});
+				// } else {
+				// 	queries.push_back({v, u});
+				// }
+				triangle_count_iter += queryEdges({w, u}, {w, v});
 				// triangle_count.fetch_add(queryEdges({w, u}, {w, v}), std::memory_order_relaxed);		
     		}
 			
-			auto success = parlay::filter(queries, [&](auto e) {
-				return edges_set.find(e) != edges_set.end();
-			});
+			// auto success = parlay::filter(queries, [&](auto e) {
+			// 	return edges_set.find(e) != edges_set.end();
+			// });
 
-			// counts[i] = triangle_count_iter;
-			counts[i] = success.size();
+			counts[i] = triangle_count_iter;
+			// counts[i] = success.size();
 			//triangle_count.fetch_add(triangle_count_iter, std::memory_order_relaxed);
 		});
 
