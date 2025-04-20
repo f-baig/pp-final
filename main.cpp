@@ -101,6 +101,8 @@ public:
 	int getTriangleCount() { return triangle_count; }
 
 	void computeTriangles() {
+		parlay::sequence<long long> counts(edges_seq.size());
+
 		parlay::parallel_for(0, edges_seq.size(), [&](int i) {
 			long long triangle_count_iter = 0;
 
@@ -120,8 +122,12 @@ public:
 				triangle_count_iter += queryEdges({w, u}, {w, v});
 				// triangle_count.fetch_add(queryEdges({w, u}, {w, v}), std::memory_order_relaxed);		
     		}
-			triangle_count.fetch_add(triangle_count_iter, std::memory_order_relaxed);
+
+			counts[i] = triangle_count_iter;
+			//triangle_count.fetch_add(triangle_count_iter, std::memory_order_relaxed);
 		});
+
+		triangle_count = parlay::reduce(counts, parlay::addm<long long>());
 	}
 	
 private:
