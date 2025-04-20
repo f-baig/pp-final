@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -O2 -g -fopenmp
+CXXFLAGS = -std=c++17 -O2 -g -fopenmp -DPARLAY_ALLOC_ALLOW_LEAK
 INCLUDES = -I parlaylib/include
 
 # Target and source

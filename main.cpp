@@ -106,7 +106,9 @@ public:
 	int getTriangleCount() { return triangle_count; }
 
 	void computeTriangles() {
-		auto counts = parlay::tabulate(edges_seq.size(), [&](size_t i) -> long long {
+		parlay::sequence<long long> counts(edges_seq.size());
+
+		parlay::parallel_for(0, edges_seq.size(), [&](int i) {
 			long long triangle_count_iter = 0;
 
 			auto e = edges_seq[i];
@@ -118,36 +120,14 @@ public:
 			} else { 
 				w = e.second;
 				u = e.first;
-			}
-
-			for (auto& v : graph->adjList.at(w)) {		
-				triangle_count_iter += queryEdges({w, u}, {w, v});		
-			}
-
-			return triangle_count_iter;
-		});
-		// parlay::sequence<long long> counts(edges_seq.size());
-
-		// parlay::parallel_for(0, edges_seq.size(), [&](int i) {
-		// 	long long triangle_count_iter = 0;
-
-		// 	auto e = edges_seq[i];
-		// 	int w, u;
-
-		// 	if (graph->adjList.at(e.first).size() <= graph->adjList.at(e.second).size()) { 
-		// 		w = e.first;
-		// 		u = e.second;
-		// 	} else { 
-		// 		w = e.second;
-		// 		u = e.first;
-      	// 	}
+      		}
 			
-		// 	for (auto &v : graph->adjList.at(w)) {		
-		// 		triangle_count_iter += queryEdges({w, u}, {w, v});		
-    	// 	}
+			for (auto &v : graph->adjList.at(w)) {		
+				triangle_count_iter += queryEdges({w, u}, {w, v});		
+    		}
 		
-		// 	counts[i] = triangle_count_iter;
-		// });
+			counts[i] = triangle_count_iter;
+		});
 
 		triangle_count = parlay::reduce(counts, parlay::addm<long long>());
 	}
