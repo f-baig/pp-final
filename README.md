@@ -85,6 +85,8 @@ GBBS - 0.00350133 s
 Note: 
 1. Added -O3 -march=native compiler flags right here
 2. Changed parser to read .adj file, and made adjList a sequence of sequences
+Building these notes on Commit 5: 0.0263645 s
 
-8. Commit "Binary search for every queried edge to eliminate hashing time"
+8. Commit "Binary search for every queried edge to eliminate hashing time": 0.006507838 s
+
 

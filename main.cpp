@@ -123,22 +123,17 @@ class Solver {
 
 public:
 	Solver(const Graph *g, const parlay::sequence<std::pair<int,int>> &edges) : 
-		graph(g), edges_seq(edges) {
-			edges_set.reserve(edges_seq.size());
-			for (const auto& e : edges_seq) {
-				edges_set.insert(e);
-			}	
-		}
+		graph(g), edges(edges) {}
 
 	int getTriangleCount() { return triangle_count; }
 
 	void computeTriangles() {
-		parlay::sequence<long long> counts(edges_seq.size());
+		parlay::sequence<long long> counts(edges.size());
 
-		parlay::parallel_for(0, edges_seq.size(), [&](int i) {
+		parlay::parallel_for(0, edges.size(), [&](int i) {
 			long long triangle_count_iter = 0;
 
-			auto e = edges_seq[i];
+			auto e = edges[i];
 			int w, u;
 
 			if (graph->adjList[e.first].size() <= graph->adjList[e.second].size()) { 
@@ -150,7 +145,7 @@ public:
       		}
 			
 			for (auto &v : graph->adjList[w]) {		
-				triangle_count_iter += queryEdges({w, u}, {w, v});		
+				triangle_count_iter += queryEdge(u, v);		
     		}
 		
 			counts[i] = triangle_count_iter;
@@ -165,19 +160,13 @@ private:
 	 * triangle_count is a running total of triangles
 	 * graph is a pointer to the 
 	 */
-	std::atomic<long long> triangle_count{0};
+	long long triangle_count = 0;
 	const Graph *graph;
-	parlay::sequence<std::pair<int,int>> edges_seq;
-	std::unordered_set<std::pair<int,int>, PairHash> edges_set;
+	parlay::sequence<std::pair<int,int>> edges;
 
-	int queryEdges(std::pair<int,int> e1, std::pair<int,int> e2) {
-		if (e1.second < e2.second) {
-			return edges_set.find({e1.second, e2.second}) != edges_set.end();
-		}
-		else { // e2.second < e1.second
-			return edges_set.find({e2.second, e1.second}) != edges_set.end();
-		}	
-	}
+	int queryEdge(int u, int v) {
+		return std::binary_search(graph->adjList[u].begin(), graph->adjList[u].end(), v);
+	};
 };
 
 int main(int argc, char** argv) {
