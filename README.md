@@ -43,3 +43,9 @@ g++ -std=c++17 -O3 -pthread \
     -o TriangleCount
 
 ./TriangleCount -s wiki-Vote.adj
+
+email-Enron Datset:
+
+GBBS - 0.00350133 s
+
+Commit "Fetch Add Per Query": 0.1595534
