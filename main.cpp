@@ -119,6 +119,7 @@ private:
 	}
 };
 
+// int binary_search_factor; 
 class Solver {
 
 public:
@@ -132,7 +133,7 @@ public:
 
 		parlay::parallel_for(0, edges.size(), [&](int i) {
 			auto e = edges[i];
-			counts[i] = countSharedVertices(graph->adjList[e.first], graph->adjList[e.second]);
+			counts[i] = countSharedVertices(graph->adjList[e.first], graph->adjList[e.second], e.first, e.second);
 		});
 
 		triangle_count = parlay::reduce(counts, parlay::addm<long long>());
@@ -148,26 +149,44 @@ private:
 	const Graph *graph;
 	parlay::sequence<std::pair<int,int>> edges;
 
-	long long countSharedVertices(const parlay::sequence<int>& w, const parlay::sequence<int>& u) {
-		size_t w_idx = 0;
-		size_t u_idx = 0;
+	long long countSharedVertices(const parlay::sequence<int>& w_seq, 
+								  const parlay::sequence<int>& u_seq,
+								  size_t w, size_t u) {
 		long long count = 0;
-		while (w_idx < w.size() && u_idx < u.size()) {
-			if (w[w_idx] < u[u_idx]) {
-				w_idx++;
-			} else if (w[w_idx] > u[u_idx]) {
-				u_idx++;
-			} else { // w[w_idx] = u[u_udx]
-				count++; 
-				w_idx++;
-				u_idx++;
+		int binary_search_factor = 100;
+		if (w_seq.size() * binary_search_factor < u_seq.size()) {
+			for (auto &v : w_seq) {
+				count += queryEdge(u, v);
+			}
+		} else if (w_seq.size() > u_seq.size() * binary_search_factor) {
+			for (auto &v : u_seq) {
+				count += queryEdge(w, v);
+			}
+		} else {
+			size_t w_idx = 0;
+			size_t u_idx = 0;
+			while (w_idx < w_seq.size() && u_idx < u_seq.size()) {
+				if (w_seq[w_idx] < u_seq[u_idx]) {
+					w_idx++;
+				} else if (w_seq[w_idx] > u_seq[u_idx]) {
+					u_idx++;
+				} else { // w[w_idx] = u[u_udx]
+					count++; 
+					w_idx++;
+					u_idx++;
+				}
 			}
 		}
 		return count;
 	}
+
+	int queryEdge(int u, int v) {
+		return std::binary_search(graph->adjList[u].begin(), graph->adjList[u].end(), v);
+	};
 };
 
 int main(int argc, char** argv) {
+	// binary_search_factor = std::atoi(argv[2]);
 	std::string data_file  = argv[1];
 	parlay::sequence<std::pair<int,int>> edges = parseEdges(data_file);
 	
