@@ -45,8 +45,7 @@ make relabel
 
 **Command for calculating the arboricity of a graph:**
 
-./arboricity/build/find_arboricity <path to graph>
-
+./arboricity/build/find_arboricity <path_to_graph>
 Ex usage: ./arboricity/build/find_arboricity ./test_graphs/r_arxiv-gqc.txt
 
 Note: expects to be run from the pp-final folder, and requires a graph that has
