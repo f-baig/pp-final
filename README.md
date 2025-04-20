@@ -11,19 +11,12 @@ Relabel:
 - gets rid of comments
 
 TODO:
-- Make the edges list not have both directions
-- Deal with large vertex IDs (use strings)
-- Add parallelism to main.cpp
 - Create GBBS pipeline
-- Do arboricity stuff
 - Data collection
 - Brain dataset processing
 - Test executable in makefile
 
-Questions:
-Directed graphs??
-
-Commands for Gbbs:
+**Commands for Gbbs:**
 
 wget https://snap.stanford.edu/data/wiki-Vote.txt.gz
 
@@ -43,6 +36,27 @@ g++ -std=c++17 -O3 -pthread \
     -o TriangleCount
 
 ./TriangleCount -s wiki-Vote.adj
+
+**Relabeling procedure**
+Takes in an input file (snap file in .txt format), and outputs a file that has:
+1. nodes have been mapped to 0,...,n-1 2. in the form of an edge list 3. Each edge only appears once (if (u, v), then (v, u) does not appear)
+make relabel
+./relabel <input_file> <output_file>
+
+**Command for calculating the arboricity of a graph:**
+
+./arboricity/build/find_arboricity <path to graph>
+Ex usage: ./arboricity/build/find_arboricity ./test_graphs/r_arxiv-gqc.txt
+
+Note: expects to be run from the pp-final folder, and requires a graph that has
+1. nodes have been mapped to 0,...,n-1 2. in the form of an edge list 3. Each edge only appears once (if (u, v), then (v, u) does not appear)
+
+**To run our implementation of the triangle finding algorithm**
+make final
+./final <edge_file>
+where edge_file is in the format that was described above (i.e. same as relabeling output and same as arboricity calculation input)
+
+**Trial Runs with varying paralle reduction/increment strategies**
 
 email-Enron Datset (times are median of 5 trials):
 
