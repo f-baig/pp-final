@@ -25,26 +25,46 @@ struct PairHash {
 };
 
 parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
-	parlay::sequence<std::pair<int,int>> edges_seq;
+	parlay::sequence<std::pair<int,int>> edges;
 	std::ifstream in(filename);
 	if (!in) {
 		std::cerr << "Error opening file: " << filename << "\n";
-		return edges_seq;
+		return edges;
 	}
 
-	std::unordered_set<std::pair<int,int>, PairHash> edges_set;
+	std::string burn_header;
+	std::getline(in, burn_header);
 
-	int u, v;
-	while (in >> u >> v) {
-		if (edges_set.count({u, v}) || edges_set.count({v, u})) {
-			continue;
+	size_t num_vertices, num_edges;
+	in >> num_vertices >> num_edges;
+
+	std::vector<int> offsets(num_vertices);
+	for (size_t i = 0; i < num_vertices; i++) {
+		in >> offsets[i];
+	}
+
+	std::vector<int> target_vertices(num_edges);
+	for (size_t i = 0; i < num_edges; i++) {
+		in >> target_vertices[i];
+	}
+
+	edges = parlay::sequence<std::pair<int,int>>(num_edges);
+	size_t idx = 0;
+	for (size_t i = 0; i < num_vertices; i++) {
+		size_t start = offsets[i];
+		size_t end;
+		if (i + 1 < num_vertices) {
+			end = offsets[i+1];
+		} else {
+			end = num_edges;
 		}
-		edges_seq.push_back({u, v});
-		edges_seq.push_back({v, u});
-		edges_set.insert({u, v});
+		for (size_t j = start; j < end; j++) {
+			edges[idx] = {i, target_vertices[j]};
+			idx++;
+		}
 	}
 	
-	return edges_seq;
+	return edges;
 }
 
 parlay::sequence<std::pair<int,int>> halfEdges(const parlay::sequence<std::pair<int,int>> edges) {

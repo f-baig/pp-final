@@ -81,3 +81,10 @@ GBBS - 0.00350133 s
 6. Commit "parallelized edges_set construction in hopes of improving cache hits": 0.0355912 s
 
 7. Commit "Tried doing parlay::tabulate instead of parlay::for to work on cache": 0.03203454 s
+
+Note: 
+1. Added -O3 -march=native compiler flags right here
+2. Changed parser to read .adj file, and made adjList a sequence of sequences
+
+8. Commit "Binary search for every queried edge to eliminate hashing time"
+
