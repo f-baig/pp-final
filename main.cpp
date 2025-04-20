@@ -106,9 +106,7 @@ public:
 	int getTriangleCount() { return triangle_count; }
 
 	void computeTriangles() {
-		parlay::sequence<long long> counts(edges_seq.size());
-
-		parlay::parallel_for(0, edges_seq.size(), [&](int i) {
+		auto counts = parlay::tabulate(edges_seq.size(), [&](size_t i) -> long long {
 			long long triangle_count_iter = 0;
 
 			auto e = edges_seq[i];
@@ -120,14 +118,36 @@ public:
 			} else { 
 				w = e.second;
 				u = e.first;
-      		}
-			
-			for (auto &v : graph->adjList.at(w)) {		
+			}
+
+			for (auto& v : graph->adjList.at(w)) {		
 				triangle_count_iter += queryEdges({w, u}, {w, v});		
-    		}
-		
-			counts[i] = triangle_count_iter;
+			}
+
+			return triangle_count_iter;
 		});
+		// parlay::sequence<long long> counts(edges_seq.size());
+
+		// parlay::parallel_for(0, edges_seq.size(), [&](int i) {
+		// 	long long triangle_count_iter = 0;
+
+		// 	auto e = edges_seq[i];
+		// 	int w, u;
+
+		// 	if (graph->adjList.at(e.first).size() <= graph->adjList.at(e.second).size()) { 
+		// 		w = e.first;
+		// 		u = e.second;
+		// 	} else { 
+		// 		w = e.second;
+		// 		u = e.first;
+      	// 	}
+			
+		// 	for (auto &v : graph->adjList.at(w)) {		
+		// 		triangle_count_iter += queryEdges({w, u}, {w, v});		
+    	// 	}
+		
+		// 	counts[i] = triangle_count_iter;
+		// });
 
 		triangle_count = parlay::reduce(counts, parlay::addm<long long>());
 	}
@@ -165,14 +185,16 @@ int main(int argc, char** argv) {
 	// g->printAdjList();
 
 	double start_time = omp_get_wtime();
+
 	Solver* s = new Solver(g, half_edges);
 	s->computeTriangles();
 	long long tot = s->getTriangleCount();
 	long long triangles = tot / 3;
 	
-	std::cout << "Total: " << tot << " Triangles: " << triangles << std::endl;
-
 	double end_time = omp_get_wtime();
+	
+	std::cout << "Total: " << tot << " Triangles: " << triangles << std::endl;
+	
     double elapsed = end_time - start_time;
 	std::cout << "Time Elapsed: " << elapsed << std::endl;
 	return 0;
