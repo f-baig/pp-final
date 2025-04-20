@@ -44,7 +44,7 @@ g++ -std=c++17 -O3 -pthread \
 
 ./TriangleCount -s wiki-Vote.adj
 
-email-Enron Datset:
+email-Enron Datset (times are median of 5 trials):
 
 GBBS - 0.00350133 s
 
@@ -53,3 +53,5 @@ Commit "Fetch Add Per Query": 0.1595534 s
 Commit "Private Triangle count per iteration, fetch_add once per iteration": 0.03855484 s
 
 Commit "store triangle counts per iteration in a sequence, then parlay reduce sum": 0.03456398 s
+
+Commit "add queries to a sequence, then filter out one's in edges_set": 0.04361992 s
