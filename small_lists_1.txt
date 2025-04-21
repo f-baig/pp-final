@@ -1,0 +1,15 @@
+https://snap.stanford.edu/data/facebook_combined.txt.gz, 88234, 4039
+https://snap.stanford.edu/data/twitter_combined.txt.gz, 1768149, 81306
+https://snap.stanford.edu/data/soc-Epinions1.txt.gz, 508837, 75879
+https://snap.stanford.edu/data/soc-Slashdot0811.txt.gz, 905468, 77360
+https://snap.stanford.edu/data/soc-Slashdot0902.txt.gz, 948464, 82168
+https://snap.stanford.edu/data/Wiki-Vote.txt.gz, 103689, 7115
+https://snap.stanford.edu/data/loc-gowalla_edges.txt.gz, 950327, 196591
+https://snap.stanford.edu/data/loc-brightkite_edges.txt.gz, 214078, 58228
+https://snap.stanford.edu/data/ca-HepTh.txt.gz, 25998, 9877
+https://snap.stanford.edu/data/email-Eu-core.txt.gz, 25571, 1005
+https://snap.stanford.edu/data/as20000102.txt.gz, 13895, 6474
+https://snap.stanford.edu/data/soc-sign-bitcoin-otc.txt.gz, 35592, 5881
+https://snap.stanford.edu/data/soc-sign-bitcoin-alpha.txt.gz, 24186, 3783
+https://snap.stanford.edu/data/soc-sign-Slashdot081106.txt.gz, 516575, 77357
+https://snap.stanford.edu/data/soc-sign-Slashdot090221.txt.gz, 549202, 82144

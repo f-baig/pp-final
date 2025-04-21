@@ -47,11 +47,11 @@ run_in_dir test_graphs wget "$URL"
 log "Decompressing"
 run_in_dir test_graphs gzip --decompress "$FILENAME"
 
-log "Snap Converting"
-run_in_dir test_graphs ./snap_converter -s -i "$BASENAME" -o "$ADJ_FILENAME"
-
 log "Relabeling .txt file"
 run_in_dir . ./relabel "test_graphs/$BASENAME" "test_graphs/$RELABEL_FILENAME"
+
+log "Snap Converting"
+run_in_dir test_graphs ./snap_converter -s -i "$RELABEL_FILENAME" -o "$ADJ_FILENAME"
 
 log "Finding Arboricity"
 arboricity=$(run_in_dir . ./arboricity/build/find_arboricity "./test_graphs/$RELABEL_FILENAME" | tail -n 1)
@@ -77,7 +77,7 @@ DFFS_OUTPUT="results/DFFS_RESULT_${BASENAME%.txt}.txt"
 
 for i in {1..3}; do
   echo "=== Run $i ===" >> "$DFFS_OUTPUT"
-  run_in_dir . ./final "test_graphs/$RELABEL_FILENAME" >> "$DFFS_OUTPUT" 2>&1
+  run_in_dir . ./final "test_graphs/$ADJ_FILENAME" >> "$DFFS_OUTPUT" 2>&1
   echo "" >> "$DFFS_OUTPUT"
 done
 
@@ -102,5 +102,4 @@ dffs_time=${sorted[1]}
 echo "DFFs Triangles: $dffs_triangles"
 echo "DFFs Time: $dffs_time"
 
-echo "Dataset,Arboricity,GBBS_Triangles,GBBS_Time,DFFS_Triangles,DFFS_Time" > results/summary.csv
 echo "${BASENAME%.txt},$arboricity,$gbbs_triangles,$gbbs_time,$dffs_triangles,$dffs_time" >> results/summary.csv

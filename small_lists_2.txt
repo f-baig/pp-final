@@ -1,0 +1,14 @@
+https://snap.stanford.edu/data/roadNet-PA.txt.gz, 1541898, 1088092
+https://snap.stanford.edu/data/roadNet-TX.txt.gz, 1921660, 1379917
+https://snap.stanford.edu/data/p2p-Gnutella04.txt.gz, 39994, 10876
+https://snap.stanford.edu/data/p2p-Gnutella05.txt.gz, 31839, 8846
+https://snap.stanford.edu/data/p2p-Gnutella06.txt.gz, 31525, 8717
+https://snap.stanford.edu/data/p2p-Gnutella08.txt.gz, 20777, 6301
+https://snap.stanford.edu/data/p2p-Gnutella09.txt.gz, 26013, 8114
+https://snap.stanford.edu/data/p2p-Gnutella24.txt.gz, 65369, 26518
+https://snap.stanford.edu/data/p2p-Gnutella25.txt.gz, 54705, 22687
+https://snap.stanford.edu/data/p2p-Gnutella30.txt.gz, 88328, 36682
+https://snap.stanford.edu/data/p2p-Gnutella31.txt.gz, 147892, 62586
+https://snap.stanford.edu/data/cit-HepPh.txt.gz, 421578, 34546
+https://snap.stanford.edu/data/cit-HepTh.txt.gz, 352807, 27770
+https://snap.stanford.edu/data/ca-AstroPh.txt.gz, 198110, 18772

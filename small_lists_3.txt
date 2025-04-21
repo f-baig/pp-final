@@ -1,0 +1,14 @@
+https://snap.stanford.edu/data/ca-CondMat.txt.gz, 93497, 23133
+https://snap.stanford.edu/data/ca-GrQc.txt.gz, 14496, 5242
+https://snap.stanford.edu/data/ca-HepPh.txt.gz, 118521, 12008
+https://snap.stanford.edu/data/web-NotreDame.txt.gz, 1497134, 325729
+https://snap.stanford.edu/data/amazon0302.txt.gz, 1234877, 262111
+https://snap.stanford.edu/data/soc-RedditHyperlinks.txt.gz, 858490, 55863
+https://snap.stanford.edu/data/wiki-Elec.txt.gz, 100000, 7000
+https://snap.stanford.edu/data/sx-mathoverflow.txt.gz, 506550, 24818
+https://snap.stanford.edu/data/sx-superuser.txt.gz, 1443339, 194085
+https://snap.stanford.edu/data/sx-askubuntu.txt.gz, 964437, 159316
+https://snap.stanford.edu/data/email-Eu-core-temporal.txt.gz, 332334, 986
+https://snap.stanford.edu/data/CollegeMsg.txt.gz, 20296, 1899
+https://snap.stanford.edu/data/act-mooc.txt.gz, 411749, 7143
+https://snap.stanford.edu/data/web-Stanford.txt.gz, 2312497, 281903

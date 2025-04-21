@@ -1,0 +1,14 @@
+https://snap.stanford.edu/data/gplus_combined.txt.gz, 13673453, 107614
+https://snap.stanford.edu/data/soc-LiveJournal1.txt.gz, 68993773, 4847571
+https://snap.stanford.edu/data/soc-pokec-relationships.txt.gz, 30622564, 1632803
+https://snap.stanford.edu/data/web-Google.txt.gz, 5105039, 875713
+https://snap.stanford.edu/data/amazon0505.txt.gz, 3356824, 410236
+https://snap.stanford.edu/data/wiki-topcats.txt.gz, 28511807, 1791489
+https://snap.stanford.edu/data/roadNet-CA.txt.gz, 2766607, 1965206
+https://snap.stanford.edu/data/cit-Patents.txt.gz, 16518948, 3774768
+https://snap.stanford.edu/data/web-BerkStan.txt.gz, 7600595, 685230
+https://snap.stanford.edu/data/amazon0312.txt.gz, 3200440, 400727
+https://snap.stanford.edu/data/amazon0601.txt.gz, 3387388, 403394
+https://snap.stanford.edu/data/sx-stackoverflow.txt.gz, 63497050, 2601977
+https://snap.stanford.edu/data/wiki-talk-temporal.txt.gz, 7833140, 1140149
+https://snap.stanford.edu/data/wiki-Talk.txt.gz, 5021410, 2394385
