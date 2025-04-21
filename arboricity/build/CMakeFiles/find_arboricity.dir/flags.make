@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = 
 
-CXX_FLAGS =   -march=native -std=c++14
+CXX_FLAGS =   -march=native -std=c++14 -fopenmp
 

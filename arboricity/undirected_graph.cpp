@@ -75,7 +75,9 @@ void UndirectedGraph::GetForestEdges(int k, EdgeId* forest)
 
 	NodeId i;
 	SpanningForest* F = forests[k];
-
+	
+	// PARALLEL CHANGE
+	#pragma omp parallel for
 	for (i=0; i<node_num; i++)
 	{
 		if (!F->parents[i]) forest[i] = -1;
@@ -124,6 +126,8 @@ int UndirectedGraph::Solve0()
 
 	int i, e;
 	int weight_sum = 0;
+	// PARALLEL CHANGE
+	#pragma omp parallel for reduction(+:weight_sum)
 	for (e=0; e<edge_num; e+=2)
 	{
 		weight_sum += edges[e].weight;
@@ -149,6 +153,8 @@ int UndirectedGraph::Solve0()
 		/////////////////////////////////
 		////// test where k0 > k ////////
 		/////////////////////////////////
+		// PARALLEL CHANGE
+		#pragma omp parallel for
 		for (i=0; i<node_num; i++)
 		{
 			g->add_tweights(i + user_edge_num, 0, k-k_prev);

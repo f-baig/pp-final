@@ -3,7 +3,6 @@
 
 CMakeFiles/find_arboricity.dir/find_arboricity.cpp.o
  /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/find_arboricity.cpp
- /home/accts/fsg5/cs424/CPSC424/arboricity/find_arboricity.cpp
  /usr/include/stdc-predef.h
  /usr/include/c++/11/iostream
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h
@@ -206,7 +205,7 @@ CMakeFiles/find_arboricity.dir/find_arboricity.cpp.o
  /usr/include/c++/11/bits/enable_special_members.h
  /usr/include/c++/11/bits/unordered_set.h
  /usr/include/c++/11/bits/erase_if.h
- /home/accts/fsg5/cs424/CPSC424/arboricity/arboricity.h
+ /home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/arboricity.h
  /usr/include/string.h
  /usr/include/strings.h
  /usr/include/assert.h

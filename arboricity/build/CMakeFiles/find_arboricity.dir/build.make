@@ -93,6 +93,8 @@ find_arboricity_EXTERNAL_OBJECTS =
 find_arboricity: CMakeFiles/find_arboricity.dir/find_arboricity.cpp.o
 find_arboricity: CMakeFiles/find_arboricity.dir/build.make
 find_arboricity: libarboricity.a
+find_arboricity: /usr/lib/gcc/x86_64-linux-gnu/11/libgomp.so
+find_arboricity: /usr/lib/x86_64-linux-gnu/libpthread.a
 find_arboricity: CMakeFiles/find_arboricity.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/accts/fsg5/cs424/CPSC424/pp-final/arboricity/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable find_arboricity"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/find_arboricity.dir/link.txt --verbose=$(VERBOSE)

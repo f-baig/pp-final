@@ -16,4 +16,7 @@ add_executable(test_arboricity test_arboricity.cpp)
 target_link_libraries(test_arboricity arboricity)
 
 add_executable(find_arboricity find_arboricity.cpp)
-target_link_libraries(find_arboricity arboricity)
+target_link_libraries(find_arboricity PRIVATE arboricity)
+
+find_package(OpenMP REQUIRED)
+target_link_libraries(find_arboricity PRIVATE OpenMP::OpenMP_CXX)

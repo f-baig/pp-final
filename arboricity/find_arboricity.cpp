@@ -8,8 +8,18 @@
 #include <unordered_set>
 #include "arboricity.h"
 
+struct PairHash {
+    size_t operator()(const std::pair<int,int>& p) const noexcept {
+        // pack into 64 bits
+        return std::hash<long long>()(
+            (static_cast<long long>(p.first) << 32) ^ p.second
+        );
+    }
+};
+
 int main(int argc, char **argv) {
     std::vector<std::pair<int, int>> edges;
+    std::unordered_set<std::pair<int,int>, PairHash> seen;
     std::unordered_set<int> nodes;
 
     std::string data_file  = argv[1];
@@ -29,7 +39,15 @@ int main(int argc, char **argv) {
         int a, b;
         
         if (iss >> a >> b) {
+            // Make the reverse
+            std::pair<int,int> e{a, b}, rev{b,a};
+            //Check if the reverse is in the set
+            if (seen.count(rev) || seen.count(e)) {
+                continue;
+            }
+
             edges.emplace_back(a, b);
+            seen.insert(e);
             num_edges++;
 
             nodes.insert(a);
@@ -55,3 +73,4 @@ int main(int argc, char **argv) {
 
     std::cout << g->Solve() << std::endl;
 }
+
