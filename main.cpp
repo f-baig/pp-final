@@ -154,26 +154,41 @@ private:
 								  size_t w, size_t u) {
 		long long count = 0;
 		int binary_search_factor = 100;
-		if (w_seq.size() * binary_search_factor < u_seq.size()) {
+		size_t w_seq_size = w_seq.size();
+		size_t u_seq_size = u_seq.size();
+		if (w_seq_size * binary_search_factor < u_seq_size) {
 			for (auto &v : w_seq) {
 				count += queryEdge(u, v);
 			}
-		} else if (w_seq.size() > u_seq.size() * binary_search_factor) {
+		} else if (w_seq_size > u_seq_size * binary_search_factor) {
 			for (auto &v : u_seq) {
 				count += queryEdge(w, v);
 			}
 		} else {
 			size_t w_idx = 0;
 			size_t u_idx = 0;
-			while (w_idx < w_seq.size() && u_idx < u_seq.size()) {
+			 
+			while (true) {
 				if (w_seq[w_idx] < u_seq[u_idx]) {
 					w_idx++;
+					if (w_idx == w_seq_size) {
+						break;
+					}
 				} else if (w_seq[w_idx] > u_seq[u_idx]) {
 					u_idx++;
+					if (u_idx == u_seq_size) {
+						break;
+					}
 				} else { // w[w_idx] = u[u_udx]
 					count++; 
 					w_idx++;
 					u_idx++;
+					if (w_idx == w_seq_size) {
+						break;
+					}
+					if (u_idx == u_seq_size) {
+						break;
+					}
 				}
 			}
 		}

@@ -2,7 +2,7 @@
 OUTFILE="bst_results.txt"
 > "$OUTFILE"
 
-FACTORS=(1 2 5 10 25 50 75 100 200)
+FACTORS=(1 2 4 8 16 32 64 128 256 512 1024)
 
 for f in "${FACTORS[@]}"; do
   printf "%3d ‑ " "$f" >> "$OUTFILE"

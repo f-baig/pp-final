@@ -92,3 +92,5 @@ Building these notes on Commit 5: 0.0263645 s
 9. Commit "Merge-like strategy to count shared vertices": 0.00424631 s
 
 10. Commit "Combined binary search and merge-like strategy": 0.002996638 s
+
+11. Commit "Precomputed sizes in countSharedVertices": 0.002920068 s
