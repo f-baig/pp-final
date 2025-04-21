@@ -114,7 +114,9 @@ private:
 		for (const auto& e : edges) {
 			int u = e.first;
 			int v = e.second;
-			adjList[u].push_back(v);
+			if (u < v) {
+				adjList[u].push_back(v);
+			}	
     	}
 	}
 };
@@ -217,7 +219,8 @@ int main(int argc, char** argv) {
 	Solver* s = new Solver(g, half_edges);
 	s->computeTriangles();
 	long long tot = s->getTriangleCount();
-	long long triangles = tot / 3;
+	// long long triangles = tot / 3;
+	long long triangles = tot;
 	
 	double end_time = omp_get_wtime();
 	

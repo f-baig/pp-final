@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -O3 -march=native -g -fopenmp -DPARLAY_ALLOC_ALLOW_LEAK
+CXXFLAGS = -std=c++17 -O3 -march=native -funroll-loops -g -fopenmp -DPARLAY_ALLOC_ALLOW_LEAK
 INCLUDES = -I parlaylib/include
 
 # Target and source
