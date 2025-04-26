@@ -5,26 +5,15 @@
 #include <string>
 #include <algorithm>
 #include <limits>
-#include <unordered_map>
-#include <unordered_set>
 #include <omp.h>
 #include <utility>
-#include <atomic>
 
 // Include ParlayLib (adjust the path if needed)
 #include <parlay/primitives.h>
 #include <parlay/parallel.h>
 #include <parlay/sequence.h>
-#include <parlay/hash_table.h>
 
-struct PairHash {
-	std::size_t operator()(const std::pair<int,int>& p) const {
-		// return ~(std::hash<int>{}(p.first)) ^ (std::hash<int>{}(p.second));
-		return (std::hash<int>{}(p.first)) ^ (std::hash<int>{}(p.second)) << 1;
-	}
-};
-
-parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
+parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename, size_t &vertices) {
 	parlay::sequence<std::pair<int,int>> edges;
 	std::ifstream in(filename);
 	if (!in) {
@@ -37,6 +26,7 @@ parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
 
 	size_t num_vertices, num_edges;
 	in >> num_vertices >> num_edges;
+	vertices = num_vertices;
 
 	std::vector<int> offsets(num_vertices);
 	for (size_t i = 0; i < num_vertices; i++) {
@@ -48,7 +38,7 @@ parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
 		in >> target_vertices[i];
 	}
 
-	edges = parlay::sequence<std::pair<int,int>>(num_edges);
+	edges = parlay::sequence<std::pair<int,int>>(num_edges/2);
 	size_t idx = 0;
 	for (size_t i = 0; i < num_vertices; i++) {
 		size_t start = offsets[i];
@@ -59,22 +49,14 @@ parlay::sequence<std::pair<int,int>> parseEdges(const std::string &filename) {
 			end = num_edges;
 		}
 		for (size_t j = start; j < end; j++) {
-			edges[idx] = {i, target_vertices[j]};
-			idx++;
+			if (i < target_vertices[j]) {
+				edges[idx] = {i, target_vertices[j]};
+				idx++;
+			}
 		}
 	}
 	
 	return edges;
-}
-
-parlay::sequence<std::pair<int,int>> halfEdges(const parlay::sequence<std::pair<int,int>> edges) {
-	parlay::sequence<std::pair<int,int>> half_edges;
-	for (auto& e : edges) {
-		if (e.first < e.second) {
-			half_edges.emplace_back(e);
-		}
-	}
-	return half_edges;
 }
 
 // class
@@ -85,43 +67,38 @@ class Graph {
 public:
 	parlay::sequence<parlay::sequence<int>> adjList;
 
-	Graph(parlay::sequence<std::pair<int,int>> &edges) {
+	Graph(size_t &num_vertices, parlay::sequence<std::pair<int,int>> &edges) {
+		vertices = num_vertices;
 		createAdjList(edges);
 	}
 
-	// void printAdjList() const {
-	// 	for (int i = 0; i < adjList.size(); i++) {
-	// 		std::cout << "Index: " << i << " Adjacent Nodes: ";
+	void printAdjList() const {
+		for (int i = 0; i < adjList.size(); i++) {
+			std::cout << "Index: " << i << " Adjacent Nodes: ";
 
-	// 		for (auto &e : adjList[i]) {
-	// 			std::cout << e << ", ";
-	// 		}
-	// 		std::cout << std::endl;
-	// 	}
-  	// }
+			for (auto &e : adjList[i]) {
+				std::cout << e << ", ";
+			}
+			std::cout << std::endl;
+		}
+  	}
 
 private:
+	size_t vertices;
+
 	void createAdjList(const parlay::sequence<std::pair<int,int>>& edges) {
 		if (edges.empty()) return;
 
-		int max_vertex = 0;
-		for (const auto& e : edges) {
-			max_vertex = std::max({max_vertex, e.first, e.second});
-		}
-
-		adjList = parlay::sequence<parlay::sequence<int>>(max_vertex + 1);
+		adjList = parlay::sequence<parlay::sequence<int>>(vertices);
 
 		for (const auto& e : edges) {
 			int u = e.first;
 			int v = e.second;
-			if (u < v) {
-				adjList[u].push_back(v);
-			}	
+			adjList[u].push_back(v);	
     	}
 	}
 };
 
-// int binary_search_factor; 
 class Solver {
 
 public:
@@ -203,30 +180,35 @@ private:
 };
 
 int main(int argc, char** argv) {
-	// binary_search_factor = std::atoi(argv[2]);
-	std::string data_file  = argv[1];
-	parlay::sequence<std::pair<int,int>> edges = parseEdges(data_file);
-	
-	Graph *g = new Graph(edges);
-
-	parlay::sequence<std::pair<int,int>> half_edges = halfEdges(edges);
-
-	// g->printMapping();
-	// g->printAdjList();
-
 	double start_time = omp_get_wtime();
 
-	Solver* s = new Solver(g, half_edges);
+	std::string data_file  = argv[1];
+	size_t num_vertices;
+	parlay::sequence<std::pair<int,int>> edges = parseEdges(data_file, num_vertices);
+	
+	double parsing_marker = omp_get_wtime();
+	double parsing_time = parsing_marker - start_time;
+	std::cout << "Parsing Time: " << parsing_time << std::endl;
+
+	Graph *g = new Graph(num_vertices, edges);
+
+	double construction_marker = omp_get_wtime();
+	double construction_time = construction_marker - parsing_marker;
+	std::cout << "Adjacency List Construction Time: " << construction_time << std::endl;
+
+	Solver* s = new Solver(g, edges);
 	s->computeTriangles();
-	long long tot = s->getTriangleCount();
-	// long long triangles = tot / 3;
-	long long triangles = tot;
+	long long triangles = s->getTriangleCount();
 	
 	double end_time = omp_get_wtime();
+	double solving_time = end_time - construction_marker;
+	std::cout << "Computing Triangles Time: " << solving_time << std::endl;
 	
-	std::cout << "Total: " << tot << " Triangles: " << triangles << std::endl;
-	
-    double elapsed = end_time - start_time;
-	std::cout << "Time Elapsed: " << elapsed << std::endl;
+	double elapsed_exclude_parser = end_time - parsing_marker;
+	double elapsed = end_time - start_time;
+	std::cout << "Total Time (excluding parser): " << elapsed_exclude_parser << std::endl;
+	std::cout << "Total Time Elapsed: " << elapsed << std::endl;
+
+	std::cout << "Total: " << triangles << " Triangles: " << triangles << std::endl;
 	return 0;
 }
