@@ -1,14 +1,14 @@
 # Shared Memory Parallel Triangle Counting
 This repository contains our final project submission for CPSC 424, an implementation of a shared memory parallel triangle counting algorithm built using ParlayLib. Our starting point was a distributed memory triangle counting algorithm written by [Liu et. al.](https://arxiv.org/abs/2405.00262), from which we optimized for shared memory, reaching within 20% of the performance of the GBBS benchmark for triangle counting.
 
-When starting with testing our algorithm, we recommend you follow the two-line tutorial below.
+When starting with testing our algorithm, we recommend you follow the two-line tutorial below. Run both commands while you are in the main project folder.
 
 ```
 $ make final
 $ ./final test_graphs/relabeled_email_enron.txt
 ```
 
-To run the corresponding test for the GBBS benchmark, you can run the following commands. *Note that if you are on the Zoo, you do not need to run the first command, as we include the precompiled ./TriangleCount executable in the repository.*
+To run the corresponding test for the GBBS benchmark, you can run the following commands. Run both commands while you are in the main project folder. *Note that if you are on the Zoo, you do not need to run the first command, as we include the precompiled ./TriangleCount executable in the repository.*
 
 ```
 $ g++ -std=c++17 -O3 -pthread \
