@@ -5,7 +5,7 @@ When starting with testing our algorithm, we recommend you follow the two-line t
 
 ```
 $ make final
-$ ./final test_graphs/relabeled_email_enron.txt
+$ ./final test_graphs/rbl_email_enron.adj
 ```
 
 To run the corresponding test for the GBBS benchmark, you can run the following commands. Run both commands while you are in the main project folder. *Note that if you are on the Zoo, you do not need to run the first command, as we include the precompiled ./TriangleCount executable in the repository.*
@@ -19,7 +19,7 @@ $ g++ -std=c++17 -O3 -pthread \
     gbbs/encodings/byte_pd_amortized.cc \
     -I. -Igbbs -Iparlaylib/include \
     -o TriangleCount
-$ ./TriangleCount -s test_graphs/email_enron.adj
+$ ./TriangleCount -s test_graphs/rbl_email_enron.adj
 ```
 
-For more rigorous testing and finding graph arboricity there are a few more steps which we would be happy to explain if reached out to, however for the sake of brevity we will leave the testing tutorial here.
+For more rigorous testing and finding graph arboricity, there are a few more steps which we would be happy to explain if reached out to. However for the sake of brevity, we will leave the testing tutorial here.
