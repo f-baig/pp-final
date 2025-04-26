@@ -128,44 +128,44 @@ private:
 	const Graph *graph;
 	parlay::sequence<std::pair<int,int>> edges;
 
-	long long countSharedVertices(const parlay::sequence<int>& w_seq, 
-								  const parlay::sequence<int>& u_seq,
-								  size_t w, size_t u) {
+	long long countSharedVertices(const parlay::sequence<int>& u_seq, 
+								  const parlay::sequence<int>& v_seq,
+								  size_t u, size_t v) {
 		long long count = 0;
 		int binary_search_factor = 100;
-		size_t w_seq_size = w_seq.size();
 		size_t u_seq_size = u_seq.size();
-		if (w_seq_size * binary_search_factor < u_seq_size) {
-			for (auto &v : w_seq) {
-				count += queryEdge(u, v);
+		size_t v_seq_size = v_seq.size();
+		if (u_seq_size * binary_search_factor < v_seq_size) {
+			for (auto &w : u_seq) {
+				count += queryEdge(v, w);
 			}
-		} else if (w_seq_size > u_seq_size * binary_search_factor) {
-			for (auto &v : u_seq) {
-				count += queryEdge(w, v);
+		} else if (u_seq_size > v_seq_size * binary_search_factor) {
+			for (auto &w : v_seq) {
+				count += queryEdge(u, w);
 			}
 		} else {
-			size_t w_idx = 0;
 			size_t u_idx = 0;
+			size_t v_idx = 0;
 			 
 			while (true) {
-				if (w_seq[w_idx] < u_seq[u_idx]) {
-					w_idx++;
-					if (w_idx == w_seq_size) {
-						break;
-					}
-				} else if (w_seq[w_idx] > u_seq[u_idx]) {
+				if (u_seq[u_idx] < v_seq[v_idx]) {
 					u_idx++;
 					if (u_idx == u_seq_size) {
+						break;
+					}
+				} else if (u_seq[u_idx] > v_seq[v_idx]) {
+					v_idx++;
+					if (v_idx == v_seq_size) {
 						break;
 					}
 				} else { // w[w_idx] = u[u_udx]
 					count++; 
-					w_idx++;
 					u_idx++;
-					if (w_idx == w_seq_size) {
+					v_idx++;
+					if (u_idx == u_seq_size) {
 						break;
 					}
-					if (u_idx == u_seq_size) {
+					if (v_idx == v_seq_size) {
 						break;
 					}
 				}
@@ -209,6 +209,6 @@ int main(int argc, char** argv) {
 	std::cout << "Total Time (excluding parser): " << elapsed_exclude_parser << std::endl;
 	std::cout << "Total Time Elapsed: " << elapsed << std::endl;
 
-	std::cout << "Total: " << triangles << " Triangles: " << triangles << std::endl;
+	std::cout << "Triangles: " << triangles << std::endl;
 	return 0;
 }
