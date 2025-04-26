@@ -1,21 +1,6 @@
 # pp-final
 parallel shared-memory implementation of triangle counting algorithm
 
-Triangle Counts:
-arxiv-gqc.txt: 48260
-email-Enron.txt: 727044
-
-Relabel:
-- Doesn't Double
-- Relabel vertices
-- gets rid of comments
-
-TODO:
-- Create GBBS pipeline
-- Data collection
-- Brain dataset processing
-- Test executable in makefile
-
 **Running Test Script**
 - chmod +x ./test-pipeline.sh
 - ./test-pipeline https://snap.stanford.edu/data/wiki-Vote.txt.gz
@@ -60,39 +45,3 @@ Note: expects to be run from the pp-final folder, and requires a graph that has
 make final
 ./final <edge_file>
 where edge_file is in the format that was described above (i.e. same as relabeling output and same as arboricity calculation input)
-
-**Trial Runs with varying paralle reduction/increment strategies**
-
-email-Enron Datset (times are median of 5 trials):
-
-GBBS - 0.00350133 s
-
-1. Commit "Fetch Add Per Query": 0.1595534 s
-
-2. Commit "Private Triangle count per iteration, fetch_add once per iteration": 0.03855484 s
-
-3. Commit "store triangle counts per iteration in a sequence, then parlay reduce sum": 0.03456398 s
-
-4. Commit "add queries to a sequence, then filter out one's in edges_set": 0.04361992 s
-
-5-7 builds on Commit 3
-5. Commit "allocate size of edges_set to save time from rehashing": 0.03022596 s
-
-6. Commit "parallelized edges_set construction in hopes of improving cache hits": 0.0355912 s
-
-7. Commit "Tried doing parlay::tabulate instead of parlay::for to work on cache": 0.03203454 s
-
-Note: 
-1. Added -O3 -march=native compiler flags right here
-2. Changed parser to read .adj file, and made adjList a sequence of sequences
-Building these notes on Commit 5: 0.0263645 s
-
-8. Commit "Binary search for every queried edge to eliminate hashing time": 0.006507838 s
-
-9. Commit "Merge-like strategy to count shared vertices": 0.00424631 s
-
-10. Commit "Combined binary search and merge-like strategy": 0.002996638 s
-
-11. Commit "Precomputed sizes in countSharedVertices": 0.002920068 s
-
-12. Commit "Removed overcounting of triangles, no longer dividing by 3": 0.001644126 s
