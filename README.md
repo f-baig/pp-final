@@ -1,21 +1,17 @@
-# pp-final
-parallel shared-memory implementation of triangle counting algorithm
+# Shared Memory Parallel Triangle Counting
+This repository contains our implementation of a shared memory parallel triangle counting algorithm built using ParlayLib. Our starting point was a distributed memory triangle counting algorithm written by [Liu et. al.](https://arxiv.org/abs/2405.00262), from which we optimized for shared memory, reaching within 20% of the performance of the GBBS benchmark for triangle counting.
 
-**Running Test Script**
-- chmod +x ./test-pipeline.sh
-- ./test-pipeline https://snap.stanford.edu/data/wiki-Vote.txt.gz
+When starting with testing our algorithm, we recommend you follow the two-line tutorial below.
 
-**Commands for Gbbs:**
+```
+$ make final
+$ ./final test_graphs/relabeled_email_enron.txt
+```
 
-wget https://snap.stanford.edu/data/wiki-Vote.txt.gz
+To run the corresponding test for the GBBS benchmark, you can run the following commands. *Note that if you are on the Zoo, you do not need to run the first command, as we include the precompiled ./TriangleCount executable in the repository.*
 
-gzip --decompress ${PWD}/wiki-Vote.txt.gz
-
-g++ -std=c++17 -O3 -pthread  -DGBBSEDGELONG -DGBBSLONG   utils/snap_converter.cc     gbbs/graph_io.cc gbbs/io.cc     gbbs/helpers/parse_command_line.cc     -I. -Igbbs -Iparlaylib/include -o snap_converter
-
-./snap_converter -s -i wiki-Vote.txt -o wiki-Vote.adj
-
-g++ -std=c++17 -O3 -pthread \
+```
+$ g++ -std=c++17 -O3 -pthread \
     benchmarks/TriangleCounting/ShunTangwongsan15/Triangle.cc \
     gbbs/graph_io.cc gbbs/io.cc gbbs/helpers/parse_command_line.cc \
     gbbs/encodings/byte.cc \
@@ -23,25 +19,7 @@ g++ -std=c++17 -O3 -pthread \
     gbbs/encodings/byte_pd_amortized.cc \
     -I. -Igbbs -Iparlaylib/include \
     -o TriangleCount
+$ ./TriangleCount -s test_graphs/email_enron.adj
+```
 
-./TriangleCount -s wiki-Vote.adj
-
-**Relabeling procedure**
-Takes in an input file (snap file in .txt format), and outputs a file that has:
-1. nodes have been mapped to 0,...,n-1 2. in the form of an edge list 3. Each edge only appears once (if (u, v), then (v, u) does not appear)
-make relabel
-./relabel <input_file> <output_file>
-
-**Command for calculating the arboricity of a graph:**
-
-./arboricity/build/find_arboricity <path_to_graph>
-
-Ex usage: ./arboricity/build/find_arboricity ./test_graphs/r_arxiv-gqc.txt
-
-Note: expects to be run from the pp-final folder, and requires a graph that has
-1. nodes have been mapped to 0,...,n-1 2. in the form of an edge list 3. Each edge only appears once (if (u, v), then (v, u) does not appear)
-
-**To run our implementation of the triangle finding algorithm**
-make final
-./final <edge_file>
-where edge_file is in the format that was described above (i.e. same as relabeling output and same as arboricity calculation input)
+For more rigorous testing and finding graph arboricity there are a few more steps which we would be happy to explain if reached out to, however for the sake of brevity we will leave the testing tutorial here.
