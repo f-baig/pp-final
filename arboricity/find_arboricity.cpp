@@ -72,5 +72,7 @@ int main(int argc, char **argv) {
     }
 
     std::cout << g->Solve() << std::endl;
+    std::cout << num_nodes << std::endl;
+    std::cout << num_edges << std::endl;
 }
 

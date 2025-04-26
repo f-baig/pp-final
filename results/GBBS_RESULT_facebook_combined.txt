@@ -1,0 +1,380 @@
+=== Run 1 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.003698
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001453
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001392
+# time per iter: 0.002181
+
+=== Run 2 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.003081
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.00161
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001488
+# time per iter: 0.00205967
+
+=== Run 3 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.00325
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001565
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001411
+# time per iter: 0.00207533
+
+=== Run 4 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.003334
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001565
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001358
+# time per iter: 0.00208567
+
+=== Run 5 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.003559
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001438
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001279
+# time per iter: 0.002092
+
+=== Run 6 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.003495
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.002002
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001426
+# time per iter: 0.00230767
+
+=== Run 7 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.003266
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001652
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001449
+# time per iter: 0.00212233
+
+=== Run 8 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.003432
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001461
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.00132
+# time per iter: 0.002071
+
+=== Run 9 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.003308
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001702
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.00136
+# time per iter: 0.00212333
+
+=== Run 10 ===
+[0;32m==> Running in .: ./TriangleCount -s test_graphs/facebook_combined.adj[0m
+# n = 4039 m = 176468 len = 180509
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.003445
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001571
+### Application: Triangle Counting
+### Graph: test_graphs/facebook_combined.adj
+### Threads: 32
+### n: 4039
+### m: 176468
+### Params: ordering=degree
+### ------------------------------------
+Starting counting
+Total work = 2568827 nblocks = 52 work per block = 49401
+### Num triangles = 1612010
+### Running Time: 0.001333
+# time per iter: 0.00211633
+

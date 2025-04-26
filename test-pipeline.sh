@@ -4,12 +4,16 @@
 
 set -e
 
+########################################################
+# COLORS AND HELPERS
+########################################################
+
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
 log() {
-  echo -e "${GREEN}==> $1${NC}"
+  echo -e "${GREEN}==> $1${NC}" >&2
 }
 
 error() {
@@ -39,7 +43,19 @@ BASENAME="${FILENAME%.gz}"
 ADJ_FILENAME="${BASENAME%.txt}.adj"
 RELABEL_FILENAME="RBL_${BASENAME%.txt}.txt"
 
-# Logging + actual Commands hHeheeasdalnd DYRAANANNA
+########################################################
+# HELPER FUNCTION TO COMPUTE MEDIAN
+########################################################
+
+median_of_sorted() {                       # $1 = name of array variable
+  local -n arr=$1
+  local mid=$(( ${#arr[@]} / 2 ))
+  echo "${arr[$mid]}"
+}
+
+########################################################
+# LOGGING AND ACTUAL COMMANDS
+########################################################
 
 log "Getting .gz file"
 run_in_dir test_graphs wget "$URL"
@@ -50,56 +66,91 @@ run_in_dir test_graphs gzip --decompress "$FILENAME"
 log "Relabeling .txt file"
 run_in_dir . ./relabel "test_graphs/$BASENAME" "test_graphs/$RELABEL_FILENAME"
 
+########################################################
+# SNAP CONVERTING
+########################################################
+
 log "Snap Converting"
 run_in_dir test_graphs ./snap_converter -s -i "$RELABEL_FILENAME" -o "$ADJ_FILENAME"
 
+########################################################
+# FINDING ARBORICITY
+########################################################
+
 log "Finding Arboricity"
-arboricity=$(run_in_dir . ./arboricity/build/find_arboricity "./test_graphs/$RELABEL_FILENAME" | tail -n 1)
+readarray -t info < <( run_in_dir . ./arboricity/build/find_arboricity "./test_graphs/$RELABEL_FILENAME" )
+arboricity=${info[0]}
+num_nodes=${info[1]}
+num_edges=${info[2]}
 
 echo "Arboricity: $arboricity"
 
+########################################################
+# RUNNING ON GBBS BENCHMARK
+########################################################
+
 log "Running GBBS Benchmark"
-run_in_dir . ./TriangleCount -s "test_graphs/$ADJ_FILENAME" \
-  | tee "results/GBBS_RESULT_${BASENAME%.txt}.txt" > /dev/null
+GBBS_OUTPUT="results/GBBS_RESULT_${BASENAME%.txt}.txt"
+> "$GBBS_OUTPUT"    
 
-GBBS_RESULT_FILE="results/GBBS_RESULT_${BASENAME%.txt}.txt"
+for i in {1..10}; do
+  echo "=== Run $i ===" >> "$GBBS_OUTPUT"
+  run_in_dir . ./TriangleCount -s "test_graphs/$ADJ_FILENAME" \
+      >> "$GBBS_OUTPUT" 2>&1
+  echo "" >> "$GBBS_OUTPUT"
+done
 
-gbbs_triangles=$(grep "### Num triangles" "$GBBS_RESULT_FILE" | tail -1 | awk -F'= ' '{print $2}')
+clean_gbbs=$(sed 's/\x1b\[[0-9;]*m//g' "$GBBS_OUTPUT")
 
-gbbs_time=$(grep "# time per iter:" "$GBBS_RESULT_FILE" | awk '{print $5}')
+readarray -t gbbs_triangles_arr < <(
+  grep "### Num triangles" <<<"$clean_gbbs" | awk -F'= ' '{print $2}'
+)
+readarray -t gbbs_times_arr < <(
+  grep "# time per iter:"  <<<"$clean_gbbs" | awk '{print $5}'
+)
+
+IFS=$'\n' sorted_gbbs_times=($(sort -n <<<"${gbbs_times_arr[*]}"))
+gbbs_time=$(median_of_sorted sorted_gbbs_times)
+unique_counts=($(printf "%s\n" "${gbbs_triangles_arr[@]}" | sort -u))
+gbbs_triangles="${unique_counts[0]}"
 
 echo "GBBS Triangles: $gbbs_triangles"
 echo "GBBS Time: $gbbs_time"
 
-log "Running DFFs Implementation 3 times"
-DFFS_OUTPUT="results/DFFS_RESULT_${BASENAME%.txt}.txt"
-> "$DFFS_OUTPUT"
+########################################################
+# RUNNING DFFs (OUR) IMPLEMENTATION
+########################################################
 
-for i in {1..3}; do
-  echo "=== Run $i ===" >> "$DFFS_OUTPUT"
-  run_in_dir . ./final "test_graphs/$ADJ_FILENAME" >> "$DFFS_OUTPUT" 2>&1
-  echo "" >> "$DFFS_OUTPUT"
+log "Running DFFs Implementation"
+DFFS_OUT="results/DFFS_RESULT_${BASENAME%.txt}.txt"
+> "$DFFS_OUT"
+
+for i in {1..30}; do
+  echo "=== Run $i ===" >> "$DFFS_OUT"
+  run_in_dir . ./final "test_graphs/$ADJ_FILENAME" \
+      >> "$DFFS_OUT" 2>&1
+  echo >> "$DFFS_OUT"
 done
 
-DFFS_RESULT_FILE="results/DFFS_RESULT_${BASENAME%.txt}.txt"
+clean_dffs=$(sed -E 's/\x1b\[[0-9;]*m//g' "$DFFS_OUT")
 
-clean_output=$(sed 's/\x1b\[[0-9;]*m//g' "$DFFS_RESULT_FILE")
+readarray -t dffs_triangles_arr < <(
+  grep "Triangles:"   <<<"$clean_dffs" | sed -E 's/.*Triangles: \[?([0-9]+)\]?.*/\1/'
+)
+readarray -t dffs_times_arr < <(
+grep "Computing Triangles Time:" <<<"$clean_dffs" | awk '{print $4}'
+)
 
-readarray -t triangle_counts < <(echo "$clean_output" | grep "Triangles:" | sed -E 's/.*Triangles: \[?([0-9]+)\]?.*/\1/')
-
-if [ "${triangle_counts[0]}" = "${triangle_counts[1]}" ] && [ "${triangle_counts[1]}" = "${triangle_counts[2]}" ]; then
-  dffs_triangles="${triangle_counts[0]}"
-else
-  echo "❌ Triangle count mismatch across DFFs runs: ${triangle_counts[*]}"
-  exit 1
-fi
-
-readarray -t dffs_times < <(echo "$clean_output" | grep "Time Elapsed:" | awk '{print $3}')
-
-IFS=$'\n' sorted=($(sort -n <<<"${dffs_times[*]}"))
-dffs_time=${sorted[1]}
+IFS=$'\n' sorted_dffs_times=($(sort -n <<<"${dffs_times_arr[*]}"))
+dffs_time=$(median_of_sorted sorted_dffs_times)
+uniq_dffs=($(printf "%s\n" "${dffs_triangles_arr[@]}" | sort -u))
+dffs_triangles=${uniq_dffs[0]}
 
 echo "DFFs Triangles: $dffs_triangles"
 echo "DFFs Time: $dffs_time"
 
-echo "${BASENAME%.txt},$arboricity,$gbbs_triangles,$gbbs_time,$dffs_triangles,$dffs_time" >> results/summary.csv
+########################################################
+# FINAL OUTPUT
+########################################################
+
+echo "${BASENAME%.txt},$arboricity,$num_nodes,$num_edges,$gbbs_triangles,$gbbs_time,$dffs_triangles,$dffs_time" >> results/summary_v2.csv

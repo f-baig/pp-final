@@ -1,0 +1,300 @@
+=== Run 1 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00977605
+Adjacency List Construction Time: 0.00150917
+Computing Triangles Time: 0.000854971
+Total Time (excluding parser): 0.00236414
+Total Time Elapsed: 0.0121402
+Total: 1612010 Triangles: 1612010
+
+=== Run 2 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00694953
+Adjacency List Construction Time: 0.00152677
+Computing Triangles Time: 0.000854021
+Total Time (excluding parser): 0.00238079
+Total Time Elapsed: 0.00933032
+Total: 1612010 Triangles: 1612010
+
+=== Run 3 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00819298
+Adjacency List Construction Time: 0.00148663
+Computing Triangles Time: 0.000856919
+Total Time (excluding parser): 0.00234355
+Total Time Elapsed: 0.0105365
+Total: 1612010 Triangles: 1612010
+
+=== Run 4 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.0114088
+Adjacency List Construction Time: 0.00155121
+Computing Triangles Time: 0.000844513
+Total Time (excluding parser): 0.00239573
+Total Time Elapsed: 0.0138046
+Total: 1612010 Triangles: 1612010
+
+=== Run 5 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00882342
+Adjacency List Construction Time: 0.00187416
+Computing Triangles Time: 0.000848271
+Total Time (excluding parser): 0.00272243
+Total Time Elapsed: 0.0115458
+Total: 1612010 Triangles: 1612010
+
+=== Run 6 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00695277
+Adjacency List Construction Time: 0.00155913
+Computing Triangles Time: 0.00093133
+Total Time (excluding parser): 0.00249046
+Total Time Elapsed: 0.00944322
+Total: 1612010 Triangles: 1612010
+
+=== Run 7 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00663435
+Adjacency List Construction Time: 0.00156928
+Computing Triangles Time: 0.00086745
+Total Time (excluding parser): 0.00243673
+Total Time Elapsed: 0.00907107
+Total: 1612010 Triangles: 1612010
+
+=== Run 8 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00639332
+Adjacency List Construction Time: 0.00166845
+Computing Triangles Time: 0.0008336
+Total Time (excluding parser): 0.00250205
+Total Time Elapsed: 0.00889537
+Total: 1612010 Triangles: 1612010
+
+=== Run 9 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00662994
+Adjacency List Construction Time: 0.00157759
+Computing Triangles Time: 0.00083983
+Total Time (excluding parser): 0.00241743
+Total Time Elapsed: 0.00904736
+Total: 1612010 Triangles: 1612010
+
+=== Run 10 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.0069939
+Adjacency List Construction Time: 0.00159903
+Computing Triangles Time: 0.000843229
+Total Time (excluding parser): 0.00244226
+Total Time Elapsed: 0.00943616
+Total: 1612010 Triangles: 1612010
+
+=== Run 11 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00830009
+Adjacency List Construction Time: 0.00143613
+Computing Triangles Time: 0.000841589
+Total Time (excluding parser): 0.00227772
+Total Time Elapsed: 0.0105778
+Total: 1612010 Triangles: 1612010
+
+=== Run 12 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00836031
+Adjacency List Construction Time: 0.00182532
+Computing Triangles Time: 0.000945474
+Total Time (excluding parser): 0.00277079
+Total Time Elapsed: 0.0111311
+Total: 1612010 Triangles: 1612010
+
+=== Run 13 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00746223
+Adjacency List Construction Time: 0.00155514
+Computing Triangles Time: 0.000861213
+Total Time (excluding parser): 0.00241635
+Total Time Elapsed: 0.00987858
+Total: 1612010 Triangles: 1612010
+
+=== Run 14 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00640139
+Adjacency List Construction Time: 0.00162923
+Computing Triangles Time: 0.000868236
+Total Time (excluding parser): 0.00249746
+Total Time Elapsed: 0.00889885
+Total: 1612010 Triangles: 1612010
+
+=== Run 15 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.0083887
+Adjacency List Construction Time: 0.00148591
+Computing Triangles Time: 0.000859924
+Total Time (excluding parser): 0.00234583
+Total Time Elapsed: 0.0107345
+Total: 1612010 Triangles: 1612010
+
+=== Run 16 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00981165
+Adjacency List Construction Time: 0.00181633
+Computing Triangles Time: 0.000852131
+Total Time (excluding parser): 0.00266846
+Total Time Elapsed: 0.0124801
+Total: 1612010 Triangles: 1612010
+
+=== Run 17 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00742105
+Adjacency List Construction Time: 0.00153832
+Computing Triangles Time: 0.000843071
+Total Time (excluding parser): 0.00238139
+Total Time Elapsed: 0.00980244
+Total: 1612010 Triangles: 1612010
+
+=== Run 18 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00748008
+Adjacency List Construction Time: 0.00158857
+Computing Triangles Time: 0.000894245
+Total Time (excluding parser): 0.00248282
+Total Time Elapsed: 0.00996289
+Total: 1612010 Triangles: 1612010
+
+=== Run 19 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00611258
+Adjacency List Construction Time: 0.00151932
+Computing Triangles Time: 0.00085566
+Total Time (excluding parser): 0.00237498
+Total Time Elapsed: 0.00848756
+Total: 1612010 Triangles: 1612010
+
+=== Run 20 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00667552
+Adjacency List Construction Time: 0.00141701
+Computing Triangles Time: 0.000851787
+Total Time (excluding parser): 0.0022688
+Total Time Elapsed: 0.00894432
+Total: 1612010 Triangles: 1612010
+
+=== Run 21 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.008682
+Adjacency List Construction Time: 0.0018597
+Computing Triangles Time: 0.000858023
+Total Time (excluding parser): 0.00271772
+Total Time Elapsed: 0.0113997
+Total: 1612010 Triangles: 1612010
+
+=== Run 22 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00711198
+Adjacency List Construction Time: 0.00152938
+Computing Triangles Time: 0.000861953
+Total Time (excluding parser): 0.00239133
+Total Time Elapsed: 0.00950331
+Total: 1612010 Triangles: 1612010
+
+=== Run 23 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.0059944
+Adjacency List Construction Time: 0.00153565
+Computing Triangles Time: 0.000852565
+Total Time (excluding parser): 0.00238821
+Total Time Elapsed: 0.00838261
+Total: 1612010 Triangles: 1612010
+
+=== Run 24 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00685098
+Adjacency List Construction Time: 0.00143264
+Computing Triangles Time: 0.000837968
+Total Time (excluding parser): 0.00227061
+Total Time Elapsed: 0.00912159
+Total: 1612010 Triangles: 1612010
+
+=== Run 25 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00615961
+Adjacency List Construction Time: 0.00153186
+Computing Triangles Time: 0.000861063
+Total Time (excluding parser): 0.00239293
+Total Time Elapsed: 0.00855254
+Total: 1612010 Triangles: 1612010
+
+=== Run 26 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00773524
+Adjacency List Construction Time: 0.00150624
+Computing Triangles Time: 0.000848683
+Total Time (excluding parser): 0.00235492
+Total Time Elapsed: 0.0100902
+Total: 1612010 Triangles: 1612010
+
+=== Run 27 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.005913
+Adjacency List Construction Time: 0.00152181
+Computing Triangles Time: 0.000860496
+Total Time (excluding parser): 0.00238231
+Total Time Elapsed: 0.00829531
+Total: 1612010 Triangles: 1612010
+
+=== Run 28 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00600128
+Adjacency List Construction Time: 0.00145648
+Computing Triangles Time: 0.000834099
+Total Time (excluding parser): 0.00229058
+Total Time Elapsed: 0.00829186
+Total: 1612010 Triangles: 1612010
+
+=== Run 29 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.00732647
+Adjacency List Construction Time: 0.00159826
+Computing Triangles Time: 0.000839365
+Total Time (excluding parser): 0.00243762
+Total Time Elapsed: 0.00976409
+Total: 1612010 Triangles: 1612010
+
+=== Run 30 ===
+[0;32m==> Running in .: ./final
+test_graphs/facebook_combined.adj[0m
+Parsing Time: 0.0062338
+Adjacency List Construction Time: 0.00156609
+Computing Triangles Time: 0.000851209
+Total Time (excluding parser): 0.0024173
+Total Time Elapsed: 0.00865109
+Total: 1612010 Triangles: 1612010
+
