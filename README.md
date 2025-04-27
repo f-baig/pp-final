@@ -1,7 +1,7 @@
 # Shared Memory Parallel Triangle Counting
 This repository contains our final project submission for CPSC 424, an implementation of a shared memory parallel triangle counting algorithm built using ParlayLib. Our starting point was a distributed memory triangle counting algorithm written by [Liu et. al.](https://arxiv.org/abs/2405.00262), from which we optimized for shared memory, practically matching the performance of the GBBS benchmark for triangle counting.
 
-When starting with testing our algorithm, we recommend you follow the two-line tutorial below. Run both commands while you are in the main project folder. Note that the source code for the ./final executable is all in main.cpp
+When starting with testing our algorithm, we recommend you follow the two-line tutorial below. Run both commands while you are in the main project folder. Note that our source code for the ./final executable is in main.cpp
 
 ```
 $ make final
